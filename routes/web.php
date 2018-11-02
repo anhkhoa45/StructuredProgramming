@@ -13,6 +13,6 @@
 Auth::routes();
 
 
-Route::get('/', function(){ return view('index'); })->name('index');
+Route::get('/', 'IndexController@index')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/detail', function(){ return view('product_detail'); })->name('product_detail');
