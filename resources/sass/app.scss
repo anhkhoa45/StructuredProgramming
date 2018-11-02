@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 // Variables
 @import 'variables';
@@ -11,4 +11,48 @@
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+ul.filter-group {
+    li.list-title {
+        font-size: 1.2rem;
+    }
+
+    li.list-group-item.list-group-item-action {
+        border-top: 0;
+        padding-left: 2rem;
+    }
+}
+
+input.form-control.input-lg {
+    width: 35rem;
+}
+
+.product-detail {
+    .right-box {
+        border-left: 1px solid #ececec;
+
+        .name-container {
+            border-bottom: 1px solid #ececec;
+            padding: 20px;
+            .prod-name {
+                font-size: 24px;
+                font-weight: 300;
+                color: #333;
+                line-height: 30px;
+                margin: 16px 0 5px;
+            }
+        }
+
+        .detail-container {
+            border-bottom: 1px solid #ececec;
+            padding: 20px;
+
+            .price {
+                color: #ff3425;
+                font-size: 19px;
+                font-weight: 500;
+            }
+        }
+    }
 }
