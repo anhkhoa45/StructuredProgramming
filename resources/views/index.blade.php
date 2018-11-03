@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="margin-top-10">
                                     <button type="button" class="btn btn-warning">Add to cart</button>
-                                    <button type="button" class="btn btn-primary">Detail</button>
+                                    <a href="{{ url('product/detail/'.$product->id) }}"><button type="button" class="btn btn-primary">Detail</button></a>
                                 </div>
                             </div>
                         </div>
