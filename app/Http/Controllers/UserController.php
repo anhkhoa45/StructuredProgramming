@@ -39,23 +39,8 @@ class UserController extends Controller
             $request->avatar->storeAs('avatars', $avatarName);
             $user->avatar = $avatarName;
             $user->save();
-            return back()
-                ->with('success','You have successfully upload image.');
         }
-        return back();
-    }
-
-    public function update_avatar(Request $request) {
-        echo($request->avatar->getClientOriginalExtension());
-        $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        $user = Auth::user();
-        $avatarName = $user->id.'_avatar'.time().'.'.request()->avatar->getClientOriginalExtension();
-        $request->avatar->storeAs('avatars', $avatarName);
-        $user->avatar = $avatarName;
-        $user->save();
-        // return back()
-        //     ->with('success','You have successfully upload image.');
+        return back()
+        ->with('success','You have successfully update profile');
     }
 }
