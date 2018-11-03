@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{$product->id}}
     <div class="container product-detail">
         <div class="row">
             <div class="col-md-4 left-box">
