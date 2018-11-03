@@ -2,29 +2,61 @@
 
 @section('content')
     <div class="container">
-        {{ dd($categories) }}
         <div class="row justify-content-center">
             <div class="col-md-3">
-                <ul class="list-group filter-group">
-                    <li class="list-group-item list-title"><strong>Nam - Nữ</strong></li>
-                    <li class="list-group-item list-group-item-action">
-                        <input type="radio" name="gender" value=""> Nam</input>
-                    </li>
-                    <li class="list-group-item list-group-item-action">
-                        <input type="radio" name="gender" value=""> Nữ</input>
-                    </li>
+                <form action="" method="GET">
+                    <ul class="list-group filter-group">
+                        <li class="list-group-item list-title"><strong>Loại</strong></li>
+                        @foreach($categories as $category)
+                        <li class="list-group-item list-group-item-action">
+                            <input type="checkbox" name="categories[]" value="{{ $category->id }}"> {{ $category->name }}
+                        </li>
+                        @endforeach
 
-                    <li class="list-group-item list-title"><strong>Giá</strong></li>
-                    <li class="list-group-item list-group-item-action">0 - 500.000</li>
-                    <li class="list-group-item list-group-item-action">500.000 - 1.000.000</li>
-                    <li class="list-group-item list-group-item-action">1.000.000 - 2.000.000</li>
-                    <li class="list-group-item list-group-item-action">> 2.000.000</li>
+                        <li class="list-group-item list-title"><strong>Nam - Nữ</strong></li>
+                        <li class="list-group-item list-group-item-action">
+                            <input type="radio" name="gender" value="0"> Nam</input>
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <input type="radio" name="gender" value="1"> Nữ</input>
+                        </li>
 
-                    <li class="list-group-item list-title"><strong>Kích cỡ</strong></li>
-                    <li class="list-group-item list-group-item-action">S</li>
-                    <li class="list-group-item list-group-item-action">M</li>
-                    <li class="list-group-item list-group-item-action">L</li>
-                </ul>
+                        <li class="list-group-item list-title"><strong>Giá</strong></li>
+                        <li class="list-group-item list-group-item-action">
+                            <span class="text-price-range" data-price-min="0" data-price-max="500000">0 - 500.000</span>
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <span class="text-price-range" data-price-min="500000" data-price-max="1000000">500.000 - 1.000.000</span>
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <span class="text-price-range" data-price-min="1000000" data-price-max="2000000">1.000.000 - 2.000.000</span>
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <span class="text-price-range" data-price-min="2000000">> 2.000.000</span>
+                        </li>
+                        <li class="list-group-item">
+                            <form class="form-inline">
+                                <input id="priceMin" type="text" class="form-control" name="price_min" placeholder="Từ">
+                                <input id="priceMax" type="text" class="form-control" name="price_max" placeholder="Đến">
+                            </form>
+                        </li>
+
+                        <li class="list-group-item list-title"><strong>Kích cỡ</strong></li>
+                        <li class="list-group-item list-group-item-action">
+                            <input type="checkbox" name="size[]" value="S"> S
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <input type="checkbox" name="size[]" value="M"> M
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <input type="checkbox" name="size[]" value="L"> L
+                        </li>
+
+                        <li class="list-group-item">
+                            <button type="submit">Áp dụng</button>
+                        </li>
+                    </ul>
+                </form>
             </div>
             <div class="col-md-9">
                 <div class="row slider justify-content-center">
@@ -105,4 +137,19 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            let priceMinInp = document.getElementById('priceMin');
+            let priceMaxInp = document.getElementById('priceMax');
+
+            $('.text-price-range').click(function(){
+                priceMinInp.value = $(this).data('price-min');
+                priceMaxInp.value = $(this).data('price-max') || '';
+            });
+        });
+    </script>
+
 @endsection
