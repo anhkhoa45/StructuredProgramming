@@ -31,12 +31,14 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Search box -->
-                    <form class="form-inline my-2 my-lg-0 m-auto">
+                    <form class="form-inline my-2 my-lg-0 m-auto" action="/" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control input-lg" placeholder="Search product"
-                                   aria-label="Search" aria-describedby="button-addon2">
+                                   aria-label="Search" aria-describedby="button-addon2"
+                                   @if(isset($searchData)) value="{{ $searchData['name'] }}" @endif
+                                   name="name">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
                                     Search
                                 </button>
                             </div>

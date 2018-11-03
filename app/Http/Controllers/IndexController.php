@@ -13,38 +13,48 @@ class IndexController extends Controller
     {
         $categories = Category::all();
 
-
-        $query = Product::whereHas('categories', function ($query) use ($request) {
-            if($request->has('categories')){
+        if($request->has('categories')){
+            $query = Product::whereHas('categories', function ($query) use ($request) {
                 $query->whereIn('categories.id', $request->query('categories'));
-            }
-        })->with('categories');
+            })->with('categories');
+        } else {
+            $query = Product::with('categories');
+        }
+
 
         if($request->has('name')){
             $query = $query->where('products.name', 'LIKE', '%'.$request->query('name').'%');
         }
 
         if($request->has('size')){
-            $query = $query->whereIn('products.size', 'IN', $request->query('size'));
+            $query = $query->whereIn('products.size', $request->query('size'));
         }
 
         if($request->has('gender')){
-            $query = $query->where('products.gender', '=', $request->query('gender'));
+            $query = $query->whereIn('products.gender', $request->query('gender'));
         }
 
-        if($request->has('price_min')){
+        if($request->filled('price_min')){
             $query = $query->where('products.price', '>=', $request->query('price_min'));
         }
 
-        if($request->has('price_max')){
+        if($request->filled('price_max')){
             $query = $query->where('products.price', '<=', $request->query('price_max'));
         }
 
-        $products = $query->get();
+        $products = $query->paginate(6);
 
         return view('index', [
             'categories' => $categories,
-            'products' => $products
+            'products' => $products,
+            'searchData' => [
+                'categories' => $request->query('categories'),
+                'name' => $request->query('name'),
+                'size' => $request->query('size'),
+                'gender' => $request->query('gender'),
+                'price_min' => $request->query('price_min'),
+                'price_max' => $request->query('price_max'),
+            ]
         ]);
     }
 }
