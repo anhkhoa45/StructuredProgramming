@@ -5,20 +5,28 @@
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <form action="" method="GET">
+                    @if($searchData['name'])
+                    <input type="hidden" value="{{ $searchData['name'] }}" name="name">
+                    @endif
                     <ul class="list-group filter-group">
                         <li class="list-group-item list-title"><strong>Loại</strong></li>
                         @foreach($categories as $category)
                         <li class="list-group-item list-group-item-action">
-                            <input type="checkbox" name="categories[]" value="{{ $category->id }}"> {{ $category->name }}
+                            <input type="checkbox" name="categories[]"
+                                   value="{{ $category->id }}"
+                                   @if($searchData['categories'] && in_array($category->id, $searchData['categories']))
+                                       checked
+                                   @endif>
+                            {{ $category->name }}
                         </li>
                         @endforeach
 
                         <li class="list-group-item list-title"><strong>Nam - Nữ</strong></li>
                         <li class="list-group-item list-group-item-action">
-                            <input type="radio" name="gender" value="0"> Nam</input>
-                        </li>
-                        <li class="list-group-item list-group-item-action">
-                            <input type="radio" name="gender" value="1"> Nữ</input>
+                            <input type="checkbox" name="gender[]" value="0"
+                                   @if($searchData['gender'] && in_array(0, $searchData['gender'])) checked @endif/> Nam
+                            <input type="checkbox" name="gender[]" value="1" class="ml-2"
+                                   @if($searchData['gender'] && in_array(1, $searchData['gender'])) checked @endif/> Nữ
                         </li>
 
                         <li class="list-group-item list-title"><strong>Giá</strong></li>
@@ -36,24 +44,30 @@
                         </li>
                         <li class="list-group-item">
                             <form class="form-inline">
-                                <input id="priceMin" type="text" class="form-control" name="price_min" placeholder="Từ">
-                                <input id="priceMax" type="text" class="form-control" name="price_max" placeholder="Đến">
+                                <input id="priceMin" type="text" class="form-control" name="price_min"
+                                       placeholder="Từ" value="@if(isset($searchData['price_min'])) {{ $searchData['price_min'] }} @endif">
+                                <input id="priceMax" type="text" class="form-control" name="price_max"
+                                       placeholder="Đến" value="@if(isset($searchData['price_max'])) {{ $searchData['price_max'] }} @endif">
                             </form>
                         </li>
 
                         <li class="list-group-item list-title"><strong>Kích cỡ</strong></li>
                         <li class="list-group-item list-group-item-action">
-                            <input type="checkbox" name="size[]" value="S"> S
-                        </li>
-                        <li class="list-group-item list-group-item-action">
-                            <input type="checkbox" name="size[]" value="M"> M
-                        </li>
-                        <li class="list-group-item list-group-item-action">
-                            <input type="checkbox" name="size[]" value="L"> L
+                            <input type="checkbox" name="size[]" value="XS"
+                                   @if($searchData['size'] && in_array('XS', $searchData['size'])) checked @endif/> XS
+                            <input type="checkbox" name="size[]" value="S" class="ml-2"
+                                   @if($searchData['size'] && in_array('S', $searchData['size'])) checked @endif/> S
+                            <input type="checkbox" name="size[]" value="M" class="ml-2"
+                                   @if($searchData['size'] && in_array('M', $searchData['size'])) checked @endif/> M
+                            <input type="checkbox" name="size[]" value="L" class="ml-2"
+                                   @if($searchData['size'] && in_array('L', $searchData['size'])) checked @endif> L
+                            <input type="checkbox" name="size[]" value="XL" class="ml-2"
+                                   @if($searchData['size'] && in_array('XL', $searchData['size'])) checked @endif/> XL
                         </li>
 
                         <li class="list-group-item">
-                            <button type="submit">Áp dụng</button>
+                            <button type="submit" class="btn btn-success btn-sm">Áp dụng</button>
+                            <a href="/" class="btn btn-danger btn-sm" >Đặt lại</a>
                         </li>
                     </ul>
                 </form>
@@ -88,51 +102,31 @@
                     </div>
                 </div>
                 <div class="row margin-top-50 card-group">
-                    <div class="col-md-4 col-sm-6">
+                    @foreach($products as $product)
+                    <div class="col-md-4 col-sm-6 margin-top-10">
                         <div class="card ">
-                            <img class="card-img-top img-fluid" src="/svg/312x180.svg" alt="Card image cap">
+                            <img class="card-img-top img-fluid"
+                                 src="{{  file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
+                                          '/storage/'."$product->id/".$product->image :
+                                          '/storage/products/default.jpg'
+                                      }}"
+                                 alt="Card image cap">
                             <div class="card-body">
                                 <div>
-                                    <h5 class="card-title">Ao so mi 3 lo</h5>
-                                    <p><strong>100.000d</strong></p>
+                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <p><strong>{{ $product->price }}</strong></p>
                                 </div>
-                                <div class="btn-group margin-top-10">
-                                    <a href="#" class="btn btn-warning">Add to cart</a>
-                                    <a href="#" class="btn btn-primary">Detail</a>
+                                <div class="margin-top-10">
+                                    <button type="button" class="btn btn-warning">Add to cart</button>
+                                    <button type="button" class="btn btn-primary">Detail</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card ">
-                            <img class="card-img-top img-fluid" src="/svg/312x180.svg" alt="Card image cap">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title">Ao so mi 3 lo</h5>
-                                    <p><strong>100.000d</strong></p>
-                                </div>
-                                <div class="btn-group margin-top-10">
-                                    <a href="#" class="btn btn-warning">Add to cart</a>
-                                    <a href="#" class="btn btn-primary">Detail</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="card ">
-                            <img class="card-img-top img-fluid" src="/svg/312x180.svg" alt="Card image cap">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title">Ao so mi 3 lo</h5>
-                                    <p><strong>100.000d</strong></p>
-                                </div>
-                                <div class="btn-group margin-top-10">
-                                    <a href="#" class="btn btn-warning">Add to cart</a>
-                                    <a href="#" class="btn btn-primary">Detail</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+                </div>
+                <div class="row margin-top-30 justify-content-center">
+                    {{ $products->appends($_GET)->links() }}
                 </div>
             </div>
         </div>
