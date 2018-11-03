@@ -13,8 +13,8 @@ class ProductCategoryTableSeeder extends Seeder
     {
         for($i = 0; $i < 10; $i++){
             DB::table('product_category')->insert([
-                'product_id' => rand(0, 10),
-                'category_id' => rand(0, 5),
+                'product_id' => rand(1, 10),
+                'category_id' => rand(1, 5),
             ]);
         }
     }
