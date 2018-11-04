@@ -14,6 +14,7 @@
 Route::view('/', 'home');
 
 Auth::routes();
+Route::redirect('/logout', '/');
 
 Route::get('/', 'IndexController@index')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');
