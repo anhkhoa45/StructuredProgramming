@@ -10478,6 +10478,10 @@ a.text-dark:focus {
   }
 }
 
+#app {
+  padding-top: 50px;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -10523,5 +10527,63 @@ input.form-control.input-lg {
   color: #ff3425;
   font-size: 19px;
   font-weight: 500;
+}
+
+.bg-trans,
+.bg-trans:focus,
+.bg-trans:active,
+.bg-trans.active {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0 !important;
+}
+
+.shopping-cart .cart-products {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 12px;
+  position: relative;
+  top: -20px;
+  left: 20px;
+  border-radius: 50%;
+}
+
+.shopping-cart .img-cart {
+  display: block;
+  max-width: 50px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shopping-cart table tr td {
+  border: 1px solid #FFFFFF;
+}
+
+.shopping-cart table tr th {
+  background: #eee;
+}
+
+.shopping-cart .panel-shadow {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+          box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+}
+
+.shopping-cart .p-thumbnail {
+  height: 50px;
+  width: 50px;
+}
+
+.shopping-cart .quantity-form {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+}
+
+.shopping-cart .quantity-form input.form-control {
+  width: 40px;
 }
 

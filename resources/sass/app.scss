@@ -8,6 +8,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+#app {
+    padding-top: 50px;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -54,5 +58,60 @@ input.form-control.input-lg {
                 font-weight: 500;
             }
         }
+    }
+}
+
+
+.bg-trans {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.shopping-cart {
+    .cart-products {
+        display: block;
+        width: 15px;
+        height: 15px;
+        background-color: #dc3545;
+        color: white;
+        font-size: 12px;
+        position: relative;
+        top: -20px;
+        left: 20px;
+        border-radius: 50%;
+    }
+
+    .img-cart {
+        display: block;
+        max-width: 50px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table tr td{
+        border:1px solid #FFFFFF;
+    }
+
+    table tr th {
+        background:#eee;
+    }
+
+    .panel-shadow {
+        box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+    }
+
+    .p-thumbnail {
+        height: 50px;
+        width:50px;
+    }
+
+    .quantity-form {
+        flex-flow: row;
+    }
+
+    .quantity-form input.form-control {
+        width: 40px;
     }
 }
