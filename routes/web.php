@@ -23,4 +23,5 @@ Route::get('/user/profile', 'UserController@profile');
 Route::post('/user/update', 'UserController@update');
 
 //Admin
-Route::get('/admin', 'Admin\IndexController@index');
+Route::get('/backend', 'Backend\IndexController@index');
+Route::resource('/backend/setting/user', 'Backend\UserController');
