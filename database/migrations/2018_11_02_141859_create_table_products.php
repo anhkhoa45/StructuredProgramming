@@ -20,7 +20,7 @@ class CreateTableProducts extends Migration
             $table->string('image');
             $table->integer('price');
             $table->string('size', 5);
-            $table->integer('gender')->default(0); // 0 for male, 1 for female
+            $table->enum('gender', ['male', 'female','both']);
             $table->integer('quantity')->default(0);
             $table->timestamps();
         });

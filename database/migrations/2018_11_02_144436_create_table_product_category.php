@@ -16,7 +16,6 @@ class CreateTableProductCategory extends Migration
         Schema::create('product_category', function (Blueprint $table) {
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('category_id');
-
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('category_id')->references('id')->on('categories');
         });
