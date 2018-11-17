@@ -20,8 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('avatar')->default('user.jpg');
             $table->timestamp('email_verified_at')->nullable();
+            $table->enum('active', [0, 1]);
+            $table->tinyInteger('role_id')->default(1);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
+            $table->unique(['email', 'deleted_at']);
         });
     }
 

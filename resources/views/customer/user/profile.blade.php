@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('customer.layouts.app')
 
 @section('content')
 <div class="container bootstrap snippet">
@@ -40,7 +40,7 @@
     	<div class="col-sm-9">
           <div class="tab-content">
             <div class="tab-pane active" id="home">
-                  <form class="form" method="post" id="updateForm" action="{{ url('user/update') }}" enctype="multipart/form-data">
+                  <form class="form" method="post" id="updateForm" action="{{ url('customer/user/update') }}" enctype="multipart/form-data">
                     <input type='hidden' value="{{ csrf_token() }}" name='_token' />
                       <div class="form-group">
                         <div class="col-xs-6">
