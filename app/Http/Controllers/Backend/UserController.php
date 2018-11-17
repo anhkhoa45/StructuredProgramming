@@ -23,9 +23,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = $this->userRepo->all($request, false);
-        echo($users);
-        // $test = \App\User::all();
-        // echo($test);
         return view('backend.user.index', compact('users'));
     }
 

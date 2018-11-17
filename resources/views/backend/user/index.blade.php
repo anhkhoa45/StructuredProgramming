@@ -1,4 +1,4 @@
-@extends('backend.layouts.admin')
+@extends('backend.layouts.master')
 @section('content')
 <section class="content-header">
     <h1>
@@ -23,7 +23,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="box-title">
-                        {{-- <a href="{!! route('backend.setting.user.create') !!}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="{!! trans('backend/base.add_new') !!}"><i class="fa fa-plus"></i></a> --}}
+                        <a href="{!! route('backend.setting.user.create') !!}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="{!! trans('backend/base.add_new') !!}"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <!-- /.box-header -->
