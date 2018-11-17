@@ -11,16 +11,15 @@
 |
 */
 
-Route::view('/', 'home');
-
 Auth::routes();
 Route::redirect('/logout', '/');
 
-Route::get('/', 'IndexController@index')->name('index');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('product/detail/{prod_id}', 'ProductController@detail')->name('product_detail');
-Route::get('/user/profile', 'UserController@profile');
-Route::post('/user/update', 'UserController@update');
+Route::get('/', 'Customer\IndexController@index')->name('index');
+Route::get('/home', 'Customer\HomeController@index')->name('home');
+Route::get('/product/detail/{prod_id}', 'Customer\ProductController@detail')->name('product_detail');
+Route::get('/user/profile', 'Customer\UserController@profile');
+Route::post('/user/update', 'Customer\UserController@update');
 
 //Admin
-Route::get('/admin', 'Admin\IndexController@index');
+Route::get('/admin', 'Admin\IndexController@index')->name('admin');
+Route::resource('/admin/setting/user', 'Admin\UserController', ['as' => 'admin.setting']);

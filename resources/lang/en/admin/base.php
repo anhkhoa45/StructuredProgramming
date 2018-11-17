@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'btn_add' => 'Add',
+    'btn_edit' => 'Edit',
+    'btn_delete' => 'Delete',
+    'btn_approve' => 'Approve',
+    'btn_reject' => 'Reject',
+    'search' => 'Search',
+    'detail' => 'Detail',
+    'msg_susscess' => 'Your data has been successfully saved.',
+    'msg_error' => 'You are not allowed.',
+    'msg_warning' => 'You are not allowed to change the default value.',
+    'msg_susscess_delete' => 'Successfully deleted.',
+    'msg_susscess_status' => 'Change status successfully.',
+    'msg_process_error' => 'Error while process data.',
+    'btn_save' => 'Save',
+    'btn_cancel' => 'Cancel',
+    'btn_show' => 'Detail',
+    'add_new' => 'Add New',
+    'home' => 'Home',
+    'create' => 'Create',
+    'edit' => 'Edit',
+    'search_by' => 'Search by',
+    'filter' => 'Search',
+    'search_term' => 'Search term',
+    'no_result' => 'No result',
+    'created_at' => 'Created at',
+    'updated_at' => 'Updated at'    
+];

@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/product/check-quantity', 'ProductController@checkProductQuantity');
+Route::get('/product/check-quantity', 'Customer\ProductController@checkProductQuantity');

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
+use App\Http\Controllers\Controller;
 
 use App\Category;
 use App\Product;
@@ -44,7 +45,7 @@ class IndexController extends Controller
 
         $products = $query->paginate(6);
 
-        return view('index', [
+        return view('customer.index', [
             'categories' => $categories,
             'products' => $products,
             'searchData' => [

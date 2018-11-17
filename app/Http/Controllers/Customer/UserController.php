@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class UserController extends Controller
     }
     
     public function profile() {
-        return view('user.profile')->with(['user' => Auth::user()]);
+        return view('customer.user.profile')->with(['user' => Auth::user()]);
     }
 
     public function update(Request $request) {

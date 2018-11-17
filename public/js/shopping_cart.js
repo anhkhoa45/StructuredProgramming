@@ -91,7 +91,7 @@
 	}
 
 	function checkProductQuantity(prods) {
-        return axios.get('api/product/check-quantity', {
+        return axios.get('/api/product/check-quantity', {
             params: {
                 product_ids: prods.map(function(p) {return p.id})
             }

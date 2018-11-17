@@ -1,4 +1,4 @@
-@extends('layouts.none_search_box')
+@extends('customer.layouts.none_search_box')
 
 @section('content')
 <div class="container">
