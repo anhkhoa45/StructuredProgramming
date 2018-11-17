@@ -28,13 +28,18 @@
 	};
 
 	function render(){
-		let prods = 0;
-		productListElm.empty();
+        checkProductQuantity(sCartProductList).then(function(response) {
+            let productQuantities = response.data;
+            let prods = 0;
+            productListElm.empty();
 
-		for(let i = 0; i < sCartProductList.length; i++) {
-			let prodElm = $(
-				`
-					<tr>
+            for(let i = 0; i < sCartProductList.length; i++) {
+                let productQuantity = productQuantities.find(function(p) {return p.id === sCartProductList[i].id}).quantity
+                let validQuantity = sCartProductList[i].quantity <= productQuantity;
+                let tooltipStr = 'data-toggle="tooltip" data-placement="left" title="Không đủ số lượng hàng"';
+
+                let prodElm = $(
+                    `<tr>
 	                    <td><img src="${sCartProductList[i].thumbnail}" class="img-cart"></td>
 	                    <td>
                             <strong>
@@ -47,8 +52,11 @@
 								        ${sCartProductList[i].quantity <= 1 ? 'disabled' : ''}>
 	                            	<span class="oi oi-minus"></span>
 	                            </button>
-	                            <input class="form-control prod-qua" type="text" value="${sCartProductList[i].quantity}" disabled>
-	                            <button type="button" class="btn bg-trans btn-sm btn-inc">
+	                            <input class="form-control prod-qua ${validQuantity ? '' : 'is-invalid'}" 
+	                                   ${validQuantity ? '' : tooltipStr}
+	                                   type="text" value="${sCartProductList[i].quantity}" disabled>
+	                            <button type="button" class="btn bg-trans btn-sm btn-inc"
+	                                    ${sCartProductList[i].quantity >= productQuantity ? 'disabled ' + tooltipStr : ''}>
 	                            	<span class="oi oi-plus"></span>
 	                            </button>
 	                        </form>
@@ -56,45 +64,63 @@
 	                    <td>${sCartProductList[i].price}$</td>
 	                    <td>${sCartProductList[i].price * sCartProductList[i].quantity}$</td>
 	                    <td><span class="oi oi-trash btn btn-trans btn-del"></span></td>
-	                </tr>
-				`
-			);
+	                </tr>`
+                );
 
-            prodElm.find('.btn-inc').click(function(event) {
-                event.stopPropagation();
-                sCartProductList[i].quantity++;
-                render()
-            });
-            prodElm.find('.btn-dec').click(function(event) {
-                event.stopPropagation();
-                sCartProductList[i].quantity--;
-                render();
-            });
-            prodElm.find('.btn-del').click(function(){
-                event.stopPropagation();
-                sCartProductList.splice(i, 1);
-                render();
-            });
+                prodElm.find('.btn-inc').click(function(event) {
+                    event.stopPropagation();
+                    sCartProductList[i].quantity++;
+                    render()
+                });
+                prodElm.find('.btn-dec').click(function(event) {
+                    event.stopPropagation();
+                    sCartProductList[i].quantity--;
+                    render();
+                });
+                prodElm.find('.btn-del').click(function(){
+                    event.stopPropagation();
+                    sCartProductList.splice(i, 1);
+                    render();
+                });
 
-			productListElm.append(prodElm);
-			prods += sCartProductList[i].quantity;
-		}
-		productCountElm.html(prods);
+                productListElm.append(prodElm);
+                prods += sCartProductList[i].quantity;
+            }
+            productCountElm.html(prods);
+        });
 	}
 
-	function addProduct({id, thumbnail, name, price, quantity}){
-		let i = 0;
-		for(i = 0; i < sCartProductList.length; i++) {
-			if(sCartProductList[i].id === id){
-				sCartProductList[i].quantity += quantity;
-				break;
-			}
-		}
-		if(i === sCartProductList.length)
-			sCartProductList.push({id, thumbnail, name, price, quantity});
+	function checkProductQuantity(prods) {
+        return axios.get('api/product/check-quantity', {
+            params: {
+                product_ids: prods.map(function(p) {return p.id})
+            }
+        });
+    }
 
-		render();
-		alert("Them vao gio hang thanh cong");
+	function addProduct({id, thumbnail, name, price, quantity}){
+        checkProductQuantity([{id: id}]).then(function(response) {
+            let productQuantity = response.data[0].quantity;
+
+            let i = 0;
+            for(i = 0; i < sCartProductList.length; i++) {
+                if(sCartProductList[i].id === id){
+                    if(productQuantity < sCartProductList[i].quantity + quantity){
+                        alert('Không đủ hàng trong kho, thêm sản phẩm thất bại');
+                        return;
+                    }
+                    sCartProductList[i].quantity += quantity;
+                    break;
+                }
+            }
+
+            if(i === sCartProductList.length)
+                sCartProductList.push({id, thumbnail, name, price, quantity});
+
+            render();
+            alert("Đã thêm sản phẩm vào giỏ");
+        })
+
 	}
 
 	function saveProductList(){

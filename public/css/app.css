@@ -10529,12 +10529,11 @@ input.form-control.input-lg {
   font-weight: 500;
 }
 
-.bg-trans,
-.bg-trans:focus,
-.bg-trans:active,
-.bg-trans.active {
-  background-color: rgba(0, 0, 0, 0);
-  border: 0 !important;
+.bg-trans {
+  background-color: transparent;
+  border-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .shopping-cart .cart-products {
