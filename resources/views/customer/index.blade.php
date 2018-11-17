@@ -130,7 +130,7 @@
                                     >
                                         Add to cart
                                     </button>
-                                    <a href="{{ url('customer/product/detail/'.$product->id) }}"><button type="button" class="btn btn-primary">Detail</button></a>
+                                    <a href="{{ route('product_detail', ['id' => $product->id]) }}"><button type="button" class="btn btn-primary">Detail</button></a>
                                 </div>
                             </div>
                         </div>
