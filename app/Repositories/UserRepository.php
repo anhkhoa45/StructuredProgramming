@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\User;
 use App\Repositories\SAbstractRepository;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends SAbstractRepository
 {
@@ -29,8 +30,8 @@ class UserRepository extends SAbstractRepository
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'password' => 'required|min:4',
-            // 'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
+            // 'password' => 'required|min:4',
+            'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
         ];
     }
 
@@ -42,7 +43,7 @@ class UserRepository extends SAbstractRepository
     {
         $rules = $this->rulesCreate();
         $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
-        $rules['password'] = 'min:4';
+        // $rules['password'] = 'min:4';
         return $rules;
     }
 
@@ -102,7 +103,7 @@ class UserRepository extends SAbstractRepository
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         if (!empty($request->get('password'))) {
-            $user->password = bcrypt($request->get('password'));
+            $user->password = Hash::make($request->get('password'));
         }
         if (!is_null($request->get('active'))) {
             $user->active = User::ACTIVE;
@@ -136,11 +137,12 @@ class UserRepository extends SAbstractRepository
      */
     public function create($request)
     {
+        // echo($request->get('role_id'));
         $active = is_null($request->get('active')) ? User::INACTIVE : User::ACTIVE;
         $user = User::create([
                     'name' => $request->get('name'),
                     'email' => $request->get('email'),
-                    'password' => bcrypt($request->get('password')),
+                    'password' => Hash::make($request->get('password')),
                     'role_id' => $request->get('role_id'),
                     'active' => $active
         ]);

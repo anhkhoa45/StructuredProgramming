@@ -10,6 +10,7 @@ return [
     'name' => 'Name',
     'email' => 'Email',
     'password' => 'Password',
+    'status' => 'Status',
     'avatar' => 'Avatar',
     'role_id' => 'Role',
     'created_at' => 'Created at',
