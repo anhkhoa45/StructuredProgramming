@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/open-iconic-bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Toastr -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
@@ -24,7 +25,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'ABC Wear') }}
@@ -82,6 +83,47 @@
                             </li>
                         @endguest
                     </ul>
+                    <ul class="navbar-nav ml-auto shopping-cart" id="shoppingCart">
+                        <li class="nav-item active">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-lg bg-trans dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="oi oi-cart"><span class="cart-products product-count">2</span></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-9 col-sm-8 content">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Product</th>
+                                                            <th>Description</th>
+                                                            <th>Qty</th>
+                                                            <th>Price</th>
+                                                            <th>Total</th>
+                                                            <th></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="product-list">
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row justify-content-end">
+                                                <div class="col-auto">
+                                                    <button type="button" class="btn btn-danger">Payment -></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -90,7 +132,7 @@
             @yield('content')
         </main>
 
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="pt-4 my-md-5 pt-md-5 border-top container-fluid">
             <div class="row">
                 <div class="col-12 col-md">
 
@@ -130,6 +172,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/shopping_cart.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            window.shoppingCart = ShoppingCart($('#shoppingCart'));
+        });
+    </script>
     @yield('script')
 </body>
 </html>

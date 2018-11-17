@@ -103,13 +103,15 @@
                 </div>
                 <div class="row margin-top-50 card-group">
                     @foreach($products as $product)
+                    @php
+                        $prodImg = file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
+                                          '/storage/'."$product->id/".$product->image :
+                                          '/storage/products/default.jpg';
+                    @endphp
                     <div class="col-md-4 col-sm-6 margin-top-10">
                         <div class="card ">
                             <img class="card-img-top img-fluid"
-                                 src="{{  file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
-                                          '/storage/'."$product->id/".$product->image :
-                                          '/storage/products/default.jpg'
-                                      }}"
+                                 src="{{ $prodImg }}"
                                  alt="Card image cap">
                             <div class="card-body">
                                 <div>
@@ -117,8 +119,18 @@
                                     <p><strong>{{ $product->price }}</strong></p>
                                 </div>
                                 <div class="margin-top-10">
-                                    <button type="button" class="btn btn-warning">Add to cart</button>
-                                    <a href="{{ url('customer/product/detail/'.$product->id) }}"><button type="button" class="btn btn-primary">Detail</button></a>
+                                    <button type="button" class="btn btn-warning"
+                                            onclick="shoppingCart.addProduct({
+                                                id: {{ $product->id }},
+                                                thumbnail: '{{ $prodImg }}',
+                                                name: '{{ $product->name }}',
+                                                price: {{ $product->price }},
+                                                quantity: 1
+                                            })"
+                                    >
+                                        Add to cart
+                                    </button>
+                                    <a href="{{ route('product_detail', ['id' => $product->id]) }}"><button type="button" class="btn btn-primary">Detail</button></a>
                                 </div>
                             </div>
                         </div>

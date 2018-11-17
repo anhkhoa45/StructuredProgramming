@@ -1,5 +1,11 @@
 @extends('customer.layouts.app')
 
+@php
+    $prodImg = file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
+                      '/storage/'."$product->id/".$product->image :
+                      '/storage/products/default.jpg';
+@endphp
+
 @section('content')
     <div class="container product-detail">
         <div class="row">
@@ -27,7 +33,16 @@
                 </div>
                 <div class="row btn-container">
                     <div class="col-md-12">
-                        <button class="btn btn-warning" type="button">Add to cart</button>
+                        <button class="btn btn-warning" type="button"
+                                onclick="shoppingCart.addProduct({
+                                    id: {{ $product->id }},
+                                    thumbnail: '{{ $prodImg }}',
+                                    name: '{{ $product->name }}',
+                                    price: {{ $product->price }},
+                                    quantity: 1
+                                    })">
+                            Add to cart
+                        </button>
                         <button class="btn btn-danger" type="button">Buy</button>
                     </div>
                 </div>
