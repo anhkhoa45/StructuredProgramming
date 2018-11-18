@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Storage\LaravelImpl\UserAvatarStorage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,10 +44,8 @@ class User extends Authenticatable
      */
     public function getAvatarUrl()
     {
-        if ($this->avatar == '') {
-            return url(self::PATH_AVATAR_DEFAULT);
-        }
-        return url($this->avatar);
+        $userAvatarStorage = new UserAvatarStorage();
+        return $userAvatarStorage->getUserPublicAvatar($this);
     }
     
     /**

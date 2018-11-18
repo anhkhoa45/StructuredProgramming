@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Product;
-use App\Repositories\ProductRepository;
+use App\Services\ProductServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    protected $productRepo;
+    protected $productService;
 
-    public function __construct(ProductRepository $productRepo)
+    public function __construct(ProductServiceInterface $productService)
     {
-        $this->productRepo = $productRepo;
+        $this->productService = $productService;
     }
 
     /**
@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = $this->productRepo->all($request, false);
+        $products = $this->productService->index($request);
         return view('admin/product/index', compact('products'));
     }
 
@@ -46,11 +46,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), $this->productRepo->rulesCreate());
+        $validator = \Validator::make($request->all(), $this->productService->rulesCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-        $this->productRepo->create($request);
+        $this->productService->store($request);
         return redirect()->route('admin.setting.product.index');
     }
 
@@ -62,7 +62,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = $this->productRepo->find($id);
+        $product = $this->productService->find($id);
         if (is_null($product)) {
             abort(404);
         }
@@ -77,7 +77,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = $this->productRepo->find($id);
+        $product = $this->productService->find($id);
         if (is_null($product)) {
             abort(404);
         }
@@ -93,11 +93,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = \Validator::make($request->all(), $this->productRepo->rulesUpdate($id));
+        $validator = \Validator::make($request->all(), $this->productService->rulesUpdate($id));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         } else {
-            $this->productRepo->update($request, $id);
+            $this->productService->update($request, $id);
             return redirect()->route('admin.setting.product.edit', $id);
         }
     }
@@ -110,7 +110,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $this->productRepo->delete($id);
+        $this->productService->delete($id);
         return redirect()->back();
     }
 }

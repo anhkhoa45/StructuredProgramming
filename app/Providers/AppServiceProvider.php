@@ -23,6 +23,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            'App\Services\ProductServiceInterface',
+            'App\Services\Implementation\ProductService'
+        );
+        $this->app->bind(
+            'App\Services\UserServiceInterface',
+            'App\Services\Implementation\UserService'
+        );
+
+        $this->app->bind(
+            'App\Storage\ProductImageStorageInterface',
+            'App\Storage\LaravelImpl\ProductImageStorage'
+        );
     }
 }

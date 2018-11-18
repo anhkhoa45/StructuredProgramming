@@ -39,8 +39,8 @@ Route::namespace('Customer')->group(function() {
 
     // Authorization required routes
     Route::middleware('auth')->group(function() {
-        Route::get('/user/profile', 'UserController@profile');
-        Route::post('/user/update', 'UserController@update');
+        Route::get('/user/profile', 'UserController@profile')->name('profile');
+        Route::post('/user/update', 'UserController@update')->name('profile.update');
     });
 });
 

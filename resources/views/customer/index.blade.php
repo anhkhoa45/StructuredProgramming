@@ -103,15 +103,10 @@
                 </div>
                 <div class="row margin-top-50 card-group">
                     @foreach($products as $product)
-                    @php
-                        $prodImg = file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
-                                          '/storage/'."$product->id/".$product->image :
-                                          '/storage/products/default.jpg';
-                    @endphp
                     <div class="col-md-4 col-sm-6 margin-top-10">
                         <div class="card ">
                             <img class="card-img-top img-fluid"
-                                 src="{{ $prodImg }}"
+                                 src="{{ $product->getImageUrl() }}"
                                  alt="Card image cap">
                             <div class="card-body">
                                 <div>
@@ -122,7 +117,7 @@
                                     <button type="button" class="btn btn-warning"
                                             onclick="shoppingCart.addProduct({
                                                 id: {{ $product->id }},
-                                                thumbnail: '{{ $prodImg }}',
+                                                thumbnail: '{{ $product->getImageUrl() }}',
                                                 name: '{{ $product->name }}',
                                                 price: {{ $product->price }},
                                                 quantity: 1
