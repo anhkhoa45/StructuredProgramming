@@ -2,12 +2,12 @@
 @section('content')
 <section class="content-header">
     <h1>
-        {!! trans('admin/user.mg_user') !!}
+        {!! trans('admin/product.mg_product') !!}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!! route('admin.home') !!}"><i class="fa fa-dashboard"></i> {!! trans('admin/base.home') !!}</a></li>
-        <li><a href="{!! route('admin.setting.user.index') !!}">{!! trans('admin/user.user') !!}</a></li>
-        <li><a href="{!! route('admin.setting.user.create') !!}">{!! trans('admin/user.add_user') !!}</a></li>
+        <li><a href="{!! route('admin.setting.product.index') !!}">{!! trans('admin/product.product') !!}</a></li>
+        <li><a href="{!! route('admin.setting.product.create') !!}">{!! trans('admin/product.add_product') !!}</a></li>
     </ol>
 </section>
 <section class="content" id="user-wrap">
@@ -16,7 +16,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="box-title">
-                        <h3 class="box-title">{!! trans('admin/user.add_user') !!}</h3>
+                        <h3 class="box-title">{!! trans('admin/product.add_product') !!}</h3>
                     </div>
                 </div>
                 <!-- /.box-header -->
