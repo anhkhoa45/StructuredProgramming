@@ -9,7 +9,7 @@ abstract class SAbstractRepository
 {
     private $app;
     protected $model;
-    const PAGE_SIZE = 30;
+    const PAGE_SIZE = 6;
 
     public function __construct(App $app)
     {

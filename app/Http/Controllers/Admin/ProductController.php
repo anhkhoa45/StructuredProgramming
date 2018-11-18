@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
 
-class UserController extends Controller
+class ProductController extends Controller
 {
-    protected $userRepo;
+    protected $productRepo;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(ProductRepository $productRepo)
     {
-        $this->userRepo = $userRepo;
+        $this->productRepo = $productRepo;
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $users = $this->userRepo->all($request, false);
-        return view('admin/user/index', compact('users'));
+        $products = $this->productRepo->all($request, false);
+        return view('admin/product/index', compact('products'));
     }
 
     /**
@@ -34,8 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roleArr = User::roleArr();
-        return view('admin/user/create', compact('roleArr'));
+        return view('admin/product/create');
     }
 
     /**
@@ -46,13 +46,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), $this->userRepo->rulesCreate());
+        $validator = \Validator::make($request->all(), $this->productRepo->rulesCreate());
         if ($validator->fails()) {
-            $this->toastError($validator->errors()->toArray());
             return redirect()->back()->withErrors($validator);
         }
-        $this->userRepo->create($request);
-        return redirect()->route('admin.setting.user.index');
+        $this->productRepo->create($request);
+        return redirect()->route('admin.setting.product.index');
     }
 
     /**
@@ -63,12 +62,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepo->find($id);
-        if (is_null($user)) {
+        $product = $this->productRepo->find($id);
+        if (is_null($product)) {
             abort(404);
         }
-        $roleArr = User::roleArr();;
-        return view('admin/user/show', compact('user', 'roleArr'));
+        return view('admin/product/show', compact('product'));
     }
 
     /**
@@ -79,13 +77,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->userRepo->find($id);
-        if (is_null($user)) {
+        $product = $this->productRepo->find($id);
+        if (is_null($product)) {
             abort(404);
-        } else {
-            $roleArr = User::roleArr();;
         }
-        return view('admin/user/edit', compact('user', 'roleArr'));
+        return view('admin/product/edit', compact('product'));
     }
 
     /**
@@ -97,12 +93,12 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = \Validator::make($request->all(), $this->userRepo->rulesUpdate($id));
+        $validator = \Validator::make($request->all(), $this->productRepo->rulesUpdate($id));
         if ($validator->fails()) {
-             return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator);
         } else {
-            $this->userRepo->update($request, $id);
-            return redirect()->route('admin.setting.user.edit', $id);
+            $this->productRepo->update($request, $id);
+            return redirect()->route('admin.setting.product.edit', $id);
         }
     }
 
@@ -114,7 +110,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->userRepo->delete($id);
+        $this->productRepo->delete($id);
         return redirect()->back();
     }
 }

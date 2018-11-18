@@ -11,15 +11,52 @@
 |
 */
 
-Auth::routes();
 Route::redirect('/logout', '/');
 
-Route::get('/', 'Customer\IndexController@index')->name('index');
-Route::get('/home', 'Customer\HomeController@index')->name('home');
-Route::get('/product/detail/{prod_id}', 'Customer\ProductController@detail')->name('product_detail');
-Route::get('/user/profile', 'Customer\UserController@profile');
-Route::post('/user/update', 'Customer\UserController@update');
+// Customer routes
+Route::namespace('Customer')->group(function() {
+    Route::namespace('Auth')->group(function() {
+        // Authentication Routes
+        Route::get('login', 'LoginController@showLoginForm')->name('login');
+        Route::post('login', 'LoginController@login')->name('login.post');
+        Route::post('logout', 'LoginController@logout')->name('logout');
 
-//Admin
-Route::get('/admin', 'Admin\IndexController@index')->name('admin');
-Route::resource('/admin/setting/user', 'Admin\UserController', ['as' => 'admin.setting']);
+        // Registration Routes
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
+        Route::post('register', 'RegisterController@register')->name('register.post');
+
+        // Password Reset Routes
+        Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+        Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset.token');
+        Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset.post');
+    });
+
+    Route::get('/', 'IndexController@index')->name('index');
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/product/detail/{prod_id}', 'ProductController@detail')->name('product_detail');
+
+    // Authorization required routes
+    Route::middleware('auth')->group(function() {
+        Route::get('/user/profile', 'UserController@profile');
+        Route::post('/user/update', 'UserController@update');
+    });
+});
+
+
+//Admin routes
+Route::group(['prefix' => 'admin', 'as'=>'admin.', 'namespace' => 'Admin'], function () {
+    Route::namespace('Auth')->group(function() {
+        Route::get('/login', 'LoginController@showLoginForm')->name('login');
+        Route::post('/login', 'LoginController@login')->name('login.post');
+        Route::post('logout', 'LoginController@logout')->name('logout');
+    });
+
+    Route::middleware('admin')->group(function() {
+        Route::get('/', 'IndexController@index')->name('home');
+        Route::resource('/setting/user', 'UserController', ['as' => 'setting']);
+        Route::resource('/setting/product', 'ProductController', ['as' => 'setting']);
+    });
+});
+

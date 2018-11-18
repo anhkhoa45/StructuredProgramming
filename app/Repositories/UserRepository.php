@@ -30,7 +30,7 @@ class UserRepository extends SAbstractRepository
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            // 'password' => 'required|min:4',
+            'password' => 'required|confirmed|min:4',
             'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
         ];
     }
@@ -43,20 +43,7 @@ class UserRepository extends SAbstractRepository
     {
         $rules = $this->rulesCreate();
         $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
-        // $rules['password'] = 'min:4';
         return $rules;
-    }
-
-    /**
-     * Get all roles array.
-     * @return type
-     */
-    public function roleArr()
-    {
-        return [
-            User::ROLE_ADMIN => 'ADMIN',
-            User::ROLE_USER => 'USER'
-        ];
     }
 
     /**
