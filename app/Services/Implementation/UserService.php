@@ -13,6 +13,7 @@ use App\Services\UserServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
 
 class UserService implements UserServiceInterface
@@ -40,6 +41,7 @@ class UserService implements UserServiceInterface
     public function rulesUpdate($id)
     {
         $rules = $this->rulesCreate();
+        $rules['password'] = 'nullable|confirmed|min:4';
         $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
         return $rules;
     }
@@ -81,18 +83,18 @@ class UserService implements UserServiceInterface
      */
     function store(Request $request)
     {
-        if($request->has('avatar')){
+        $avatar = '';
+
+        if($request->hasFile('avatar')){
             try{
                 $userAvatarStorage = new UserAvatarStorage();
-                $avatar = $userAvatarStorage->store($request->file('image'));
+                $avatar = $userAvatarStorage->store($request->file('avatar'));
             } catch (FileExistsException $e) {
                 throw $e;
             }
-        } else {
-            $avatar = '';
         }
 
-        $active = is_null($request->get('active')) ? User::INACTIVE : User::ACTIVE;
+        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -113,14 +115,14 @@ class UserService implements UserServiceInterface
     function update(Request $request, $id)
     {
         $user = User::find($id);
-        if($request->has('image')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('image'));
-        } else {
-            $avatar = $user->avatar;
-        }
 
-        $active = is_null($request->get('active')) ? User::INACTIVE : User::ACTIVE;
+        $avatar = $user->avatar;
+
+        if($request->hasFile('avatar')){
+            $userAvatarStorage = new UserAvatarStorage();
+            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
+        }
+        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),

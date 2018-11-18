@@ -22,7 +22,7 @@ class UserAvatarStorage extends Storage implements UserAvatarStorageInterface
      */
     function baseDir()
     {
-        return storage_path('app/public/avatars');
+        return storage_path('app/public/avatars/');
     }
 
     /**
@@ -34,6 +34,6 @@ class UserAvatarStorage extends Storage implements UserAvatarStorageInterface
         if($user->avatar == '' || !$this->checkExist($user->avatar))
             return self::DEFAULT_IMAGE;
 
-        return self::PUBLIC_DIR.$user->image;
+        return self::PUBLIC_DIR.$user->avatar;
     }
 }

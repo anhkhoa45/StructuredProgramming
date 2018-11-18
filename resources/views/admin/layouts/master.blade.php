@@ -91,6 +91,16 @@
 <script src="/adminlte/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('a.delete').click(function(){
+            var confirm = window.confirm('Are you sure?');
+            if(confirm)
+                $(this).parent().find('.form-destroy').submit();
+        });
+    });
+</script>
 @show
 </body>
 </html>

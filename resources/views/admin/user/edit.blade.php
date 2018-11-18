@@ -51,8 +51,15 @@
                             <div class="form-group {!! $errors->has('password') ? 'has-error' : '' !!} " >
                                 <label class="col-sm-2 control-label">{!! trans('admin/user.password') !!}</label>
                                 <div class="col-sm-9">
-                                    <input autocomplete="off" type="password" class="form-control" name="password" value="{!! old('password') !!}">
+                                    <input autocomplete="off" type="password" class="form-control" name="password">
                                     {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
+                                </div>
+                            </div>
+                            <div class="form-group {!! $errors->has('password_confirmation') ? 'has-error' : '' !!} " >
+                                <label class="col-sm-2 control-label"><span class="required">*</span> {!! trans('admin/user.password_confirmation') !!}</label>
+                                <div class="col-sm-9">
+                                    <input autocomplete="off" type="password" class="form-control" name="password_confirmation"/>
+                                    {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
                                 </div>
                             </div>
                             @if ($user->id != $user::CAN_NOT_DELETE)
