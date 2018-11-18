@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquents;
 
 use App\Product;
 use App\Repositories\SAbstractRepository;

@@ -5,49 +5,24 @@ use App\Http\Controllers\Controller;
 
 use App\Category;
 use App\Product;
+use App\Services\ProductServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductServiceInterface $productService)
+    {
+        $this->productService = $productService;
+    }
+
     public function index(Request $request)
     {
         $categories = Category::all();
 
-        if($request->has('categories')){
-            $query = Product::whereHas(
-                'categories',
-                function ($query) use ($request) {
-                    $query->whereIn('categories.id', $request->query('categories'));
-                }
-            )
-            ->with('categories');
-        } else {
-            $query = Product::with('categories');
-        }
-
-
-        if($request->has('name')){
-            $query = $query->where('products.name', 'LIKE', '%'.$request->query('name').'%');
-        }
-
-        if($request->has('size')){
-            $query = $query->whereIn('products.size', $request->query('size'));
-        }
-
-        if($request->has('gender')){
-            $query = $query->whereIn('products.gender', $request->query('gender'));
-        }
-
-        if($request->filled('price_min')){
-            $query = $query->where('products.price', '>=', $request->query('price_min'));
-        }
-
-        if($request->filled('price_max')){
-            $query = $query->where('products.price', '<=', $request->query('price_max'));
-        }
-
-        $products = $query->paginate(6);
+        $products = $this->productService->index($request);
 
         return view('customer.index', [
             'categories' => $categories,
