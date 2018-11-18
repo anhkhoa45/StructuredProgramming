@@ -94,7 +94,7 @@ class UserService implements UserServiceInterface
             }
         }
 
-        $active = $request->get('has') ? User::INACTIVE : User::ACTIVE;
+        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -122,7 +122,7 @@ class UserService implements UserServiceInterface
             $userAvatarStorage = new UserAvatarStorage();
             $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
         }
-        $active = is_null($request->get('active')) ? User::INACTIVE : User::ACTIVE;
+        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
