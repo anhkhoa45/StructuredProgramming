@@ -66,12 +66,12 @@
                                                 </li>
                                                 @if($user->id != $user::CAN_NOT_DELETE)
                                                 <li>
-                                                    <form method="POST" action="{!! route('admin.setting.user.destroy', $user->id) !!}" id="form-destroy">
+                                                    <form method="POST" action="{!! route('admin.setting.user.destroy', $user->id) !!}" class="form-destroy">
                                                         <input type="hidden" name="_method" value="DELETE"/>
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                         <input type="submit" class="hidden">
                                                     </form>
-                                                    <a title="{!! trans('admin/base.btn_delete') !!}" class="delete confirm">
+                                                    <a href="#" title="{!! trans('admin/base.btn_delete') !!}" class="delete confirm">
                                                         <i class="fa fa-trash-o"></i> {!! trans('admin/base.btn_delete') !!}
                                                     </a>
                                                 </li>

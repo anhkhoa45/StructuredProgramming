@@ -159,6 +159,7 @@ class ProductService implements ProductServiceInterface
     function delete($id)
     {
         $product = Product::find($id);
+        $product->categories()->detach();
         if(!is_null($product))
             $product->delete();
     }

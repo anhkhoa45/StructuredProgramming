@@ -69,7 +69,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{!! route('admin.setting.product.destroy', $product->id) !!}" id="form-destroy">
+                                                    <form method="POST" action="{!! route('admin.setting.product.destroy', $product->id) !!}" class="form-destroy">
                                                         <input type="hidden" name="_method" value="DELETE"/>
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                         <input type="submit" class="hidden">
