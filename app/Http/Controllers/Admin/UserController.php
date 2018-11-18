@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\UserServiceInterface;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
 
 class UserController extends Controller
 {
-    protected $userRepo;
+    protected $userService;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(UserServiceInterface $userService)
     {
-        $this->userRepo = $userRepo;
+        $this->userService = $userService;
     }
 
     /**
@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = $this->userRepo->all($request, false);
+        $users = $this->userService->index($request, false);
         return view('admin/user/index', compact('users'));
     }
 
@@ -46,12 +46,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), $this->userRepo->rulesCreate());
+        $validator = \Validator::make($request->all(), $this->userService->rulesCreate());
         if ($validator->fails()) {
             $this->toastError($validator->errors()->toArray());
             return redirect()->back()->withErrors($validator);
         }
-        $this->userRepo->create($request);
+        $this->userService->store($request);
         return redirect()->route('admin.setting.user.index');
     }
 
@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = $this->userRepo->find($id);
+        $user = $this->userService->find($id);
         if (is_null($user)) {
             abort(404);
         }
@@ -79,7 +79,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->userRepo->find($id);
+        $user = $this->userService->find($id);
         if (is_null($user)) {
             abort(404);
         } else {
@@ -97,11 +97,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = \Validator::make($request->all(), $this->userRepo->rulesUpdate($id));
+        $validator = \Validator::make($request->all(), $this->userService->rulesUpdate($id));
         if ($validator->fails()) {
              return redirect()->back()->withErrors($validator);
         } else {
-            $this->userRepo->update($request, $id);
+            $this->userService->update($request, $id);
             return redirect()->route('admin.setting.user.edit', $id);
         }
     }
@@ -114,7 +114,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->userRepo->delete($id);
+        $this->userService->delete($id);
         return redirect()->back();
     }
 }

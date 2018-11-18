@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\ProductServiceInterface',
             'App\Services\Implementation\ProductService'
         );
+        $this->app->bind(
+            'App\Services\UserServiceInterface',
+            'App\Services\Implementation\UserService'
+        );
 
         $this->app->bind(
             'App\Storage\ProductImageStorageInterface',

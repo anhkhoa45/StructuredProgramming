@@ -10,7 +10,13 @@ namespace App\Storage;
 
 
 
+use App\Product;
+
 interface ProductImageStorageInterface extends StorageInterface
 {
-
+    /**
+     * @param Product $product
+     * @return mixed
+     */
+    function getProductPublicImage(Product $product);
 }

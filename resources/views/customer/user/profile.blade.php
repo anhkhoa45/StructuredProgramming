@@ -33,14 +33,14 @@
     <div class="col-sm-3">
       <div class="text-center">
         <div class="col-sm-10"><h2>Your Profile</h2></div>
-        <img src="/storage/avatars/{{ $user->avatar }}" class="avatar img-circle img-thumbnail" alt="avatar" style="height:250px;">
+        <img src="/storage/avatars/{{ $user->getAvatarUrl() }}" class="avatar img-circle img-thumbnail" alt="avatar" style="height:250px;">
       </div></hr><br>
 
         </div><!--/col-3-->
     	<div class="col-sm-9">
           <div class="tab-content">
             <div class="tab-pane active" id="home">
-                  <form class="form" method="post" id="updateForm" action="{{ url('customer/user/update') }}" enctype="multipart/form-data">
+                  <form class="form" method="post" id="updateForm" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     <input type='hidden' value="{{ csrf_token() }}" name='_token' />
                       <div class="form-group">
                         <div class="col-xs-6">

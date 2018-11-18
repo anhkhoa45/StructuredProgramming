@@ -11,19 +11,14 @@ namespace App\Services\Implementation;
 
 use App\Product;
 use App\Services\ProductServiceInterface;
+use App\Storage\LaravelImpl\ProductImageStorage;
 use App\Storage\ProductImageStorageInterface;
 use League\Flysystem\FileExistsException;
 use Illuminate\Http\Request;
 
 class ProductService implements ProductServiceInterface
 {
-    protected $productRepository;
-    protected $productImageStorage;
-
-    function __construct(ProductImageStorageInterface $imageStorage)
-    {
-        $this->productImageStorage = $imageStorage;
-    }
+    const PAGE_SIZE = 6;
 
     /**
      * Rules create.
@@ -85,7 +80,7 @@ class ProductService implements ProductServiceInterface
             $query = $query->where('products.price', '<=', $request->query('price_max'));
         }
 
-        $products = $query->paginate(6);
+        $products = $query->paginate(self::PAGE_SIZE);
 
         return $products;
     }
@@ -98,7 +93,8 @@ class ProductService implements ProductServiceInterface
     {
         if($request->has('image')){
             try{
-                $image = $this->productImageStorage->store($request->file('image'));
+                $productImageStorage = new ProductImageStorage();
+                $image = $productImageStorage->store($request->file('image'));
             } catch (FileExistsException $e) {
                 throw $e;
             }
@@ -126,12 +122,13 @@ class ProductService implements ProductServiceInterface
     {
         $product = Product::find($id);
         if($request->has('image')){
-            $image = $this->productImageStorage->replace($product->image, $request->file('image'));
+            $productImageStorage = new ProductImageStorage();
+            $image = $productImageStorage->replace($product->image, $request->file('image'));
         } else {
             $image = $product->image;
         }
 
-        $product = Product::update([
+        $product = $product->update([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'price' => $request->get('price'),
