@@ -17,7 +17,8 @@ class ProductsTableSeeder extends Seeder
                 'description' => str_random(30),
                 'image' => '1.png',
                 'price' => 10000,
-                'size' => 'M'
+                'size' => 'M',
+                'quantity' => 10
             ]);
         }
     }

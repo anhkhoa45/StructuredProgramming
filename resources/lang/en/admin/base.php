@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'list' => 'List',
     'btn_add' => 'Add',
     'btn_edit' => 'Edit',
     'btn_delete' => 'Delete',
@@ -26,5 +27,7 @@ return [
     'search_term' => 'Search term',
     'no_result' => 'No result',
     'created_at' => 'Created at',
-    'updated_at' => 'Updated at'    
+    'updated_at' => 'Updated at',
+    'lbl_user' => 'User',
+    'lbl_product' => 'Product'
 ];

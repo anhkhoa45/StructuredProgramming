@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'test@gmail.com',
             'password' => Hash::make('secret'),
             'name' => 'Test',
-            'role_id' => 1,
+            'role_id' => 2,
             'active' => 1,
             'avatar' => 'uploads/users/avatars/default.png',
             'created_at' => \Carbon\Carbon::now(),

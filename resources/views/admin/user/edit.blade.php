@@ -5,7 +5,7 @@
         {!! trans('admin/user.mg_user') !!}
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{!! route('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('admin/base.home') !!}</a></li>
+        <li><a href="{!! route('admin.home') !!}"><i class="fa fa-dashboard"></i> {!! trans('admin/base.home') !!}</a></li>
         <li><a href="{!! route('admin.setting.user.index') !!}">{!! trans('admin/user.user') !!}</a></li>
         <li><a href="{!! route('admin.setting.user.edit', $user->id) !!}">{!! trans('admin/user.edit_user') !!}</a></li>
     </ol>

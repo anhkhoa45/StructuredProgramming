@@ -140,6 +140,12 @@
                 <div class="row margin-top-30 justify-content-center">
                     {{ $products->appends($_GET)->links() }}
                 </div>
+
+                @if($products->count() == 0)
+                    <div class="alert alert-warning" role="alert">
+                        This is a success alert—check it out!
+                    </div>
+                @endif
             </div>
         </div>
     </div>

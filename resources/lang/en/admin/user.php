@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'list_user' => 'List user',
     'mg_user' => 'Users management',
     'add_user' => 'Add Users',
     'edit_user' => 'Edit Users',
@@ -10,12 +11,12 @@ return [
     'name' => 'Name',
     'email' => 'Email',
     'password' => 'Password',
+    'password_confirmation' => 'Confirm Password',
     'status' => 'Status',
     'avatar' => 'Avatar',
     'role_id' => 'Role',
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',
-    'name' => 'Name',
     'detail' => 'User detail',
     'active' => 'Active',
     'inactive' => 'Inactive',

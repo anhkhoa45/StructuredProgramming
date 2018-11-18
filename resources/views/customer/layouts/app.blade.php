@@ -88,7 +88,7 @@
                             <div class="dropdown">
                                 <button type="button" class="btn btn-lg bg-trans dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="oi oi-cart"><span class="cart-products product-count">2</span></span>
+                                    <span class="oi oi-cart"><span class="cart-products product-count">0</span></span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                     <div>

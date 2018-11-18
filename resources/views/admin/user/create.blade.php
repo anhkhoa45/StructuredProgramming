@@ -5,7 +5,7 @@
         {!! trans('admin/user.mg_user') !!}
     </h1>
     <ol class="breadcrumb">
-        <li><a href="{!! route('admin') !!}"><i class="fa fa-dashboard"></i> {!! trans('admin/base.home') !!}</a></li>
+        <li><a href="{!! route('admin.home') !!}"><i class="fa fa-dashboard"></i> {!! trans('admin/base.home') !!}</a></li>
         <li><a href="{!! route('admin.setting.user.index') !!}">{!! trans('admin/user.user') !!}</a></li>
         <li><a href="{!! route('admin.setting.user.create') !!}">{!! trans('admin/user.add_user') !!}</a></li>
     </ol>
@@ -43,6 +43,13 @@
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="password" class="form-control" name="password" value="{!! old('password') !!}">
                                 {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="form-group {!! $errors->has('password_confirmation') ? 'has-error' : '' !!} " >
+                            <label class="col-sm-2 control-label"><span class="required">*</span> {!! trans('admin/user.password_confirmation') !!}</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" type="password" class="form-control" name="password_confirmation"/>
+                                {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                         <div class="form-group {!! $errors->has('role_id') ? 'has-error' : '' !!} " >

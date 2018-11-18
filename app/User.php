@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     /**
      * Get avatar url of user
-     * @return type
+     * @return string
      */
     public function getAvatarUrl()
     {
@@ -51,16 +51,16 @@ class User extends Authenticatable
     
     /**
      * Get role of user array data
-     * @return type
+     * @return array
      */
-    public function roleArr()
+    public static function roleArr()
     {
         return [
             self::ROLE_ADMIN => 'ADMIN',
             self::ROLE_USER => 'USER'
         ];
     }
-    
+
     /**
      * Convert role of user to string
      * @return string
@@ -68,25 +68,25 @@ class User extends Authenticatable
     public function roleToString()
     {
         $roleId = $this->role_id;
-        $roles = $this->roleArr();
+        $roles = self::roleArr();
         if (isset($roles[$roleId])) {
             return $roles[$roleId];
         }
         return 'N/A';
     }
-    
+
     /**
      * Get active of user array data
-     * @return type
+     * @return array
      */
-    public function activeArr()
+    public static function activeArr()
     {
         return [
-            self::ACTIVE => trans('backend/user.active'),
-            self::INACTIVE => trans('backend/user.inactive')
+            self::ACTIVE => trans('admin/user.active'),
+            self::INACTIVE => trans('admin/user.inactive')
         ];
     }
-    
+
     /**
      * Convert active of user to string
      * @return string
@@ -94,25 +94,25 @@ class User extends Authenticatable
     public function activeToString()
     {
         $key = $this->active;
-        $arr = $this->activeArr();
+        $arr = self::activeArr();
         if (isset($arr[$key])) {
             return $arr[$key];
         }
         return 'N/A';
     }
-    
+
     /**
      * Get active of user array data
-     * @return type
+     * @return array
      */
-    public function activeLbArr()
+    public static function activeLbArr()
     {
         return [
             self::ACTIVE => 'label-success',
             self::INACTIVE => 'label-danger'
         ];
     }
-    
+
     /**
      * Convert active of user to label
      * @return string
@@ -120,10 +120,18 @@ class User extends Authenticatable
     public function activeToLbClass()
     {
         $key = $this->active;
-        $arr = $this->activeLbArr();
+        $arr = self::activeLbArr();
         if (isset($arr[$key])) {
             return $arr[$key];
         }
         return 'label-default';
+    }
+
+    /**
+     * Check if user is admin
+     * @return boolean
+     */
+    public function isAdmin(){
+        return $this->role_id == self::ROLE_ADMIN;
     }
 }

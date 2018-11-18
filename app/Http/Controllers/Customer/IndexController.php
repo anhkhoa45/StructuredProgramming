@@ -15,9 +15,13 @@ class IndexController extends Controller
         $categories = Category::all();
 
         if($request->has('categories')){
-            $query = Product::whereHas('categories', function ($query) use ($request) {
-                $query->whereIn('categories.id', $request->query('categories'));
-            })->with('categories');
+            $query = Product::whereHas(
+                'categories',
+                function ($query) use ($request) {
+                    $query->whereIn('categories.id', $request->query('categories'));
+                }
+            )
+            ->with('categories');
         } else {
             $query = Product::with('categories');
         }

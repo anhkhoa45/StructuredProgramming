@@ -114,8 +114,13 @@
                 }
             }
 
-            if(i === sCartProductList.length)
+            if(i === sCartProductList.length) {
+                if (productQuantity < quantity) {
+                    alert('Không đủ hàng trong kho, thêm sản phẩm thất bại');
+                    return;
+                }
                 sCartProductList.push({id, thumbnail, name, price, quantity});
+            }
 
             render();
             alert("Đã thêm sản phẩm vào giỏ");
