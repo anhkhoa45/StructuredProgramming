@@ -29,5 +29,6 @@ return [
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',
     'lbl_user' => 'User',
-    'lbl_product' => 'Product'
+    'lbl_product' => 'Product',
+    'lbl_invoice'=>'Invoice'
 ];
