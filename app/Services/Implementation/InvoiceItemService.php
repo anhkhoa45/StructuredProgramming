@@ -10,14 +10,14 @@
 namespace App\Services\Implementation;
 
 
-use App\Services\TransactionServiceInterface;
+use App\Services\InvoiceItemServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
-use App\Transaction;
+use App\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
 
-class TransactionService implements TransactionServiceInterface
+class InvoiceItemService implements InvoiceItemServiceInterface
 {
     const PAGE_SIZE = 6;
 
@@ -61,7 +61,7 @@ class TransactionService implements TransactionServiceInterface
      */
     function find($id)
     {
-        return Transaction::find($id);
+        return InvoiceItem::find($id);
     }
 
     /**
@@ -128,7 +128,7 @@ class TransactionService implements TransactionServiceInterface
      */
     function delete($id)
     {
-        $transaction = Transaction::find($id);
+        $transaction = InvoiceItem::find($id);
 
         if(!is_null($transaction)){
             $product=$transaction->product;

@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class CreateTransactionsTable extends Migration
+class CreateInvoiceItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -11,7 +11,7 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('invoiceitems', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger("invoice_id");
             $table->unsignedInteger("product_id");

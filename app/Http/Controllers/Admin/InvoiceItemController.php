@@ -10,16 +10,16 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
-use App\Transaction;
-use App\Services\TransactionServiceInterface;
+use App\InvoiceItem;
+use App\Services\InvoiceItemServiceInterface;
 use App\Http\Controllers\Controller;
 
-class TransactionController extends Controller
+class InvoiceItemController extends Controller
 {
     protected $productService;
     //
 
-    public function __construct(TransactionServiceInterface $productService)
+    public function __construct(InvoiceItemServiceInterface $productService)
     {
         $this->productService = $productService;
     }

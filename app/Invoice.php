@@ -16,6 +16,6 @@ class Invoice extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
     function transactions(){
-        return $this->hasMany('App\Transaction', 'invoice_id');
+        return $this->hasMany('App\InvoiceItem', 'invoice_id');
     }
 }

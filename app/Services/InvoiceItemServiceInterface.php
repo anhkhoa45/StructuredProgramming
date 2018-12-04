@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
  * Interface ProductServiceInterface
  * @package App\Services\Interfaces
  */
-interface TransactionServiceInterface extends ServiceInterface
+interface InvoiceItemServiceInterface extends ServiceInterface
 {
     /**
      * @param $request

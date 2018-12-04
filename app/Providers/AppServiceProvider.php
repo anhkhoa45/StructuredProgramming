@@ -41,8 +41,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\Implementation\InvoiceService'
         );
         $this->app->bind(
-            'App\Services\TransactionServiceInterface',
-            'App\Services\Implementation\TransactionService'
+            'App\Services\InvoiceItemServiceInterface',
+            'App\Services\Implementation\InvoiceItemService'
         );
     }
 }

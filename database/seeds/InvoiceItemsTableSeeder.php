@@ -9,7 +9,7 @@
 use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\DB;
-class TransactionTableSeeder extends Seeder
+class InvoiceItemsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,7 +21,7 @@ class TransactionTableSeeder extends Seeder
         for ($i = 1; $i < 180; $i++) {
             for ($j = 0; $j < rand(1, 2); $j++) {
 
-                DB::table('transactions')->insert([
+                DB::table('invoiceitems')->insert([
                     'invoice_id' => $i,
                     'product_id' => rand(1, 9),
                     'quantity' => rand(1, 4)
