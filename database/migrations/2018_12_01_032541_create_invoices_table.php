@@ -16,7 +16,8 @@ class CreateInvoicesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string("address");
             $table->string("phone");
-            $table->enum("status",["cancel","finish"," sending","return"]);
+            $table->boolean("delivered");
+            $table->boolean("paid");
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
