@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquents;
 
 use App\User;
-use App\Repositories\SAbstractRepository;
+use App\Repositories\Eloquents\SAbstractRepository;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends SAbstractRepository

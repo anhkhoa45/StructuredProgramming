@@ -145,4 +145,12 @@ class UserService implements UserServiceInterface
         if(!is_null($user))
             $user->delete();
     }
+
+    /**
+     * Count user
+     * @return type
+     */
+    public function count(){
+        return User::where('active', User::ACTIVE)->count();
+    }
 }
