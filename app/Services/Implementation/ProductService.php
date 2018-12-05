@@ -168,4 +168,12 @@ class ProductService implements ProductServiceInterface
     {
         return Product::find($id);
     }
+    
+    /**
+     * Count product
+     * @return number
+     */
+    public function count(){
+        return Product::count();
+    }
 }
