@@ -7,13 +7,13 @@ use App\Product;
 class InvoiceItem extends Model
 {
     //
-    protected $table = 'invoiceitems';
+    protected $table = 'invoice_items';
     protected $fillable = [
         'invoice_id', 'product_id','quantity'
     ];
 
-    function product(){
-        return $this->belongsTo('App\Product', 'product_id','id');
+    function products(){
+        return $this->hasMany('App\Product', 'id','product_id');
     }
 
     function invoice(){

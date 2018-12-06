@@ -137,4 +137,17 @@ class InvoiceItemService implements InvoiceItemServiceInterface
         }
 
     }
+    
+    /**
+     * Get a number of best seller products
+     * @param $num
+     * @return InvoiceItem list of best seller Product
+     */
+    public function getBestSellerProductList($num) {
+        return InvoiceItem::groupBy('product_id')
+            ->selectRaw('product_id, sum(quantity) as sum')
+            ->orderBy('sum', 'desc')
+            ->take($num)
+            ->get();
+    }
 }

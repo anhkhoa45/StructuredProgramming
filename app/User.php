@@ -38,6 +38,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected function invoices() {
+        return $this->hasMany('App\Invoice');
+    }
+
     /**
      * Get avatar url of user
      * @return string

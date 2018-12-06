@@ -107,14 +107,21 @@ $(function(){
     labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [
       {
-        label               : 'Tổng doanh thu',
+        label               : 'Total Revenue',
         fillColor           : 'rgb(210, 214, 222)',
         strokeColor         : 'rgb(210, 214, 222)',
         pointColor          : 'rgb(210, 214, 222)',
         pointStrokeColor    : '#c1c7d1',
         pointHighlightFill  : '#fff',
         pointHighlightStroke: 'rgb(220,220,220)',
-        data                : [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56, 55, 40]
+        data                : [
+          <?php
+            echo $monthlyRevenue[0]->total_amount;
+            for ($i=1; $i<12; $i++) {
+              echo "," . $monthlyRevenue[$i]->total_amount;
+            }
+          ?>
+        ]
       },
     //   {
     //     label               : 'Quần',
@@ -189,14 +196,28 @@ $(function(){
 				strokeColor : "rgba(220,220,220,0.8)",
 				highlightFill: "rgba(220,220,220,0.75)",
 				highlightStroke: "rgba(220,220,220,1)",
-				data : [50,40,34,56,23,67,34,78,89,100,23,22,13]
+				data : [
+          <?php
+            echo $monthlyOrderedInvoiceNum[0]->ordered_invoice_num;
+            for ($i=1; $i<12; $i++) {
+              echo "," . $monthlyOrderedInvoiceNum[$i]->ordered_invoice_num;
+            }
+          ?>
+        ]
 			},
 			{
 				fillColor : "rgba(151,187,205,0.5)",
 				strokeColor : "rgba(151,187,205,0.8)",
 				highlightFill : "rgba(151,187,205,0.75)",
 				highlightStroke : "rgba(151,187,205,1)",
-        data : [12,23,56,89,67,89,90,45,45,67,34,23,45]
+        data : [
+          <?php
+            echo $monthlyPaidInvoiceNum[0]->paid_invoice_num;
+            for ($i=1; $i<12; $i++) {
+              echo "," . $monthlyPaidInvoiceNum[$i]->paid_invoice_num;
+            }
+          ?>
+        ]
 			}
 		]
   };
