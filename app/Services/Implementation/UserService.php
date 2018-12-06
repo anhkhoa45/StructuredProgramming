@@ -148,7 +148,7 @@ class UserService implements UserServiceInterface
 
     /**
      * Count user
-     * @return type
+     * @return user number
      */
     public function count(){
         return User::where('active', User::ACTIVE)->count();

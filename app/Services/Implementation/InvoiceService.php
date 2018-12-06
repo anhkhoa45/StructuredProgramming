@@ -166,7 +166,8 @@ class InvoiceService implements InvoiceServiceInterface
     }
     
     /**
-     * Count total invoice by month (from Jan -> Dec)
+     * Count total ordered invoice by month (from Jan -> Dec)
+     * @return Invoice
      */
     function getMonthlyOrderedInvoiceNum() {
         return Invoice::select(DB::raw('count(*) as ordered_invoice_num'), DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
@@ -175,6 +176,10 @@ class InvoiceService implements InvoiceServiceInterface
             ->get();
     }
 
+    /**
+     * Count total paid invoice by month (from Jan -> Dec)
+     * @return Invoice
+     */
     function getMonthlyPaidInvoiceNum() {
         return Invoice::select(DB::raw('count(*) as paid_invoice_num'), DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
             ->whereYear('created_at', '=', 2018)
