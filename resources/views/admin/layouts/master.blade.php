@@ -90,7 +90,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 <!-- Chart js -->
-<script src="/adminlte/bower_components/chart.js/chart.js"></script>
+<script src="/adminlte/bower_components/chart.js/Chart.js"></script>
 
 <script>
 $(function(){

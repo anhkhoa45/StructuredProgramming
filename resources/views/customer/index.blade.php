@@ -137,8 +137,8 @@
                 </div>
 
                 @if($products->count() == 0)
-                    <div class="alert alert-warning" role="alert">
-                        This is a success alert—check it out!
+                    <div class="alert alert-warning text-center" role="alert">
+                        Không tìm thấy sản phẩm phù hợp
                     </div>
                 @endif
             </div>

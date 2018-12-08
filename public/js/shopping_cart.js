@@ -23,9 +23,15 @@
 		return {
 			products,
 			render,
-			addProduct
+			addProduct,
+            clearCart
 		}
 	};
+
+	function clearCart(){
+        localStorage.removeItem('shoppingCart');
+        products = [];
+    }
 
     function checkProductQuantity(prods) {
         return axios.get('/api/product/check-quantity', {

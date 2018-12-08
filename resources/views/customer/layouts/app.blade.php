@@ -69,6 +69,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('invoice.index') }}">Đơn hàng của tôi</a>
                                     <a class="dropdown-item" href="{{ route('profile') }}">User Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -135,7 +136,7 @@
     <script src="{{ asset('js/shopping_cart.js') }}"></script>
     <script>
         $(document).ready(function() {
-            window.shoppingCart = ShoppingCart($('#shoppingCart'));
+            window.shoppingCart = new ShoppingCart($('#shoppingCart'));
         });
     </script>
     @yield('script')

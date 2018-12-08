@@ -12,8 +12,8 @@ class InvoiceItem extends Model
         'invoice_id', 'product_id','quantity'
     ];
 
-    function products(){
-        return $this->hasMany('App\Product', 'id','product_id');
+    function product(){
+        return $this->hasOne('App\Product', 'id','product_id');
     }
 
     function invoice(){

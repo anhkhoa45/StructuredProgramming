@@ -20,12 +20,10 @@ class PaymentController extends Controller
     private $paymentService;
 
     function getPayment() {
-        return view('customer.payment.payment');
+        return view('customer.shopping.payment');
     }
 
     function pay(Request $request) {
-        dd($request);
-
         $method = $request->get('method');
         switch ($method){
             case 'cash':
@@ -36,8 +34,19 @@ class PaymentController extends Controller
                 break;
         }
 
-        $this->paymentService->pay($request);
+        $validator = \Validator::make($request->all(), [
+            'receiver' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|min:10|max:14',
+            'total' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $invoice = $this->paymentService->pay($request);
 
         // return view invoice;
+        return view('customer.shopping.invoice', ['invoice' => $invoice, 'clearCart' => true]);
     }
 }

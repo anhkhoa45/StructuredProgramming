@@ -335,10 +335,10 @@
                       <img src="/image/1.png" alt="Product Image">
                     </div>
                     <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">{{ $item->products[0]->name }}
+                      <a href="javascript:void(0)" class="product-title">{{ $item->product->name }}
                         <span class="label label-warning pull-right">{{ $item->sum }}</span></a>
                         <span class="product-description">
-                          {{ $item->products[0]->description }}
+                          {{ $item->product->description }}
                         </span>
                     </div>
                   </li>

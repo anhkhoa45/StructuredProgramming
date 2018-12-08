@@ -43,8 +43,12 @@ Route::namespace('Customer')->group(function() {
         Route::post('/user/update', 'UserController@update')->name('profile.update');
 
         // Payment
-        Route::get('payment', 'PaymentController@getPayment')->name('payment.get_payment');
-        Route::post('payment/pay', 'PaymentController@pay')->name('payment.pay');
+        Route::get('/payment', 'PaymentController@getPayment')->name('payment.get_payment');
+        Route::post('/payment/pay', 'PaymentController@pay')->name('payment.pay');
+
+        //Invoice
+        Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
+        Route::get('/invoice/{id}', 'InvoiceController@show')->name('invoice.show');
     });
 });
 
