@@ -36,5 +36,13 @@ class AppServiceProvider extends ServiceProvider
             'App\Storage\ProductImageStorageInterface',
             'App\Storage\LaravelImpl\ProductImageStorage'
         );
+        $this->app->bind(
+            'App\Services\InvoiceServiceInterface',
+            'App\Services\Implementation\InvoiceService'
+        );
+        $this->app->bind(
+            'App\Services\InvoiceItemServiceInterface',
+            'App\Services\Implementation\InvoiceItemService'
+        );
     }
 }

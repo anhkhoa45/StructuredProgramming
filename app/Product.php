@@ -16,6 +16,10 @@ class Product extends Model
         'name', 'description', 'image', 'price', 'size', 'quantity'
     ];
 
+    protected function invoice() {
+        return $this->belongTo('App\Invoice');
+    }
+
     public function categories()
     {
         return $this->belongsToMany('App\Category', 'product_category');

@@ -46,4 +46,16 @@ interface ServiceInterface
      * @return mixed
      */
     function delete($id);
+
+    /**
+     * Rules create.
+     * @return array
+     */
+    public function rulesCreate();
+
+    /**
+     * Rules update.
+     * @return array
+     */
+    public function rulesUpdate($id);
 }

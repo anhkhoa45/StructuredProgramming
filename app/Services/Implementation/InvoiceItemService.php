@@ -1,22 +1,23 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: anhkhoa45
- * Date: 18/11/2018
- * Time: 18:57
+ * User: hung
+ * Date: 01/12/2018
+ * Time: 22:32
  */
+
 
 namespace App\Services\Implementation;
 
 
-use App\Services\UserServiceInterface;
+use App\Services\InvoiceItemServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
-use App\User;
+use App\InvoiceItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
 
-class UserService implements UserServiceInterface
+class InvoiceItemService implements InvoiceItemServiceInterface
 {
     const PAGE_SIZE = 6;
 
@@ -52,20 +53,6 @@ class UserService implements UserServiceInterface
      */
     function index(Request $request)
     {
-        $orderBy = is_null($request->get('order_by')) ? 'id' : $request->get('order_by');
-        $orderArr = explode(',', $orderBy);
-        $sortBy = in_array($request->get('sort_by'), ['asc', 'desc']) ? $request->get('sort_by') : 'desc';
-        $searchBy = $request->get('search_by');
-        $searchText = $request->get('search_text');
-        $data = User::query();
-        foreach ($orderArr as $order) {
-            $data = $data->orderBy($order, $sortBy);
-        }
-        if (!is_null($searchBy) && $this->checkColumn($searchBy)) {
-            $data = $data->where($searchBy, 'LIKE', "%$searchText%");
-        }
-
-        return $data->paginate(self::PAGE_SIZE);
     }
 
     /**
@@ -74,7 +61,7 @@ class UserService implements UserServiceInterface
      */
     function find($id)
     {
-        return User::find($id);
+        return InvoiceItem::find($id);
     }
 
     /**
@@ -141,16 +128,26 @@ class UserService implements UserServiceInterface
      */
     function delete($id)
     {
-        $user = User::find($id);
-        if(!is_null($user))
-            $user->delete();
-    }
+        $transaction = InvoiceItem::find($id);
 
+        if(!is_null($transaction)){
+            $product=$transaction->product;
+            $product->quantity=$product->quantity+$transaction->quatity;
+            $transaction->delete();
+        }
+
+    }
+    
     /**
-     * Count user
-     * @return user number
+     * Get a number of best seller products
+     * @param $num
+     * @return InvoiceItem list of best seller Product
      */
-    public function count(){
-        return User::where('active', User::ACTIVE)->count();
+    public function getBestSellerProductList($num) {
+        return InvoiceItem::groupBy('product_id')
+            ->selectRaw('product_id, sum(quantity) as sum')
+            ->orderBy('sum', 'desc')
+            ->take($num)
+            ->get();
     }
 }

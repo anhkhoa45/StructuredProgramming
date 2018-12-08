@@ -61,6 +61,12 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.', 'namespace' => 'Admin'], func
         Route::get('/', 'IndexController@index')->name('home');
         Route::resource('/setting/user', 'UserController', ['as' => 'setting']);
         Route::resource('/setting/product', 'ProductController', ['as' => 'setting']);
+        Route::resource('/setting/invoice', 'InvoiceController', ['as' => 'setting']);
+        Route::get('/setting/transaction/multiple_update','TransactionController@multiple_update')->name('transactions_multiple_update');
+        Route::resource('/setting/transaction', 'TransactionController', ['as' => 'setting'])->only([
+            'destroy','edit','update','show'
+        ]);
+
     });
 });
 

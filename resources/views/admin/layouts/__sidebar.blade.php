@@ -23,7 +23,7 @@
                 </ul>
             </li>
             <li class="active treeview">
-                <a href="{!! route('admin.setting.user.index') !!}">
+                <a href="{!! route('admin.setting.product.index') !!}">
                     <i class="fa fa-product-hunt"></i>
                     <span>{!! trans('admin/base.lbl_product') !!}</span>
                 </a>
@@ -42,6 +42,22 @@
                     </li>
                 </ul>
             </li>
+            <li class="active treeview">
+                <a href="{!! route('admin.setting.invoice.index') !!}">
+                    <i class="fa fa-product-hunt"></i>
+                    <span>{!! trans('admin/base.lbl_invoice') !!}</span>
+                </a>
+                <ul class="active treeview-menu">
+                    <li>
+                        <a href="{!! route('admin.setting.invoice.index') !!}">
+                            <i class="fa fa-align-justify"></i>
+                            {!! trans('admin/base.list') !!}
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
         </ul>
     </section>
 </aside>
