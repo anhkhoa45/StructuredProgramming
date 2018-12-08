@@ -18,6 +18,12 @@ use Illuminate\Http\Request;
 interface ProductServiceInterface extends ServiceInterface
 {
     /**
+     * Count product
+     * @return number
+     */
+    public function count();
+    
+    /**
      * @param $request
      * @return mixed
      */

@@ -11,5 +11,9 @@ namespace App\Services;
 
 interface UserServiceInterface extends ServiceInterface
 {
-
+    /**
+     * Count user
+     * @return user number
+     */
+    function count();
 }

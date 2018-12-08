@@ -19,7 +19,9 @@ use Illuminate\Http\Request;
 interface InvoiceItemServiceInterface extends ServiceInterface
 {
     /**
-     * @param $request
-     * @return mixed
+     * Get a number of best seller products
+     * @param $num
+     * @return InvoiceItem list of best seller Product
      */
+    public function getBestSellerProductList($num);
 }

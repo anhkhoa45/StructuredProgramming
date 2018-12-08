@@ -18,8 +18,9 @@ class CreateInvoicesTable extends Migration
             $table->string("phone");
             $table->boolean("delivered");
             $table->boolean("paid");
+            $table->bigInteger('total');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
         });
     }
     /**

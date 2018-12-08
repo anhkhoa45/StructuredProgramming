@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 class InvoiceController extends Controller
 {
     protected $productService;
-    //
 
     public function __construct(InvoiceServiceInterface $productService)
     {
