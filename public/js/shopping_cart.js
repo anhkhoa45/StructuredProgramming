@@ -1,5 +1,5 @@
 (function(){
-	let sCartProductList = [];
+	let products = []; // {id, thumbnail, name, price, quantity}
 	let productListElm;
 	let productCountElm;
 
@@ -8,7 +8,7 @@
 	 * @return a shopping cart object
 	 */
 	window.ShoppingCart = function(cartElm) {
-	    sCartProductList = localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : [];
+	    products = localStorage.getItem('shoppingCart') ? JSON.parse(localStorage.getItem('shoppingCart')) : [];
 		productListElm = cartElm.find('.product-list');
 		productCountElm = cartElm.find('.product-count');
 
@@ -21,7 +21,7 @@
         render();
 
 		return {
-			sCartProductList,
+			products,
 			render,
 			addProduct
 		}
@@ -36,70 +36,70 @@
     }
 
 	function render(){
-	    if(sCartProductList.length === 0) {
+	    if(products.length === 0) {
             productListElm.empty();
             productCountElm.html(0);
 	        return;
         }
 
-        checkProductQuantity(sCartProductList)
+        checkProductQuantity(products)
             .then(function(response) {
                 let productQuantities = response.data;
                 let prods = 0;
 
                 productListElm.empty();
-                for(let i = 0; i < sCartProductList.length; i++) {
-                    let productQuantity = productQuantities.find(function(p) {return p.id === sCartProductList[i].id}).quantity
-                    let validQuantity = sCartProductList[i].quantity <= productQuantity;
+                for(let i = 0; i < products.length; i++) {
+                    let productQuantity = productQuantities.find(function(p) {return p.id === products[i].id}).quantity
+                    let validQuantity = products[i].quantity <= productQuantity;
                     let tooltipStr = 'data-toggle="tooltip" data-placement="left" title="Không đủ số lượng hàng"';
 
                     let prodElm = $(
                         `<tr>
-                            <td><img src="${sCartProductList[i].thumbnail}" class="img-cart"></td>
+                            <td><img src="${products[i].thumbnail}" class="img-cart"></td>
                             <td>
                                 <strong>
-                                    <a href="/product/detail/${sCartProductList[i].id}">${sCartProductList[i].name}</a>
+                                    <a href="/product/detail/${products[i].id}">${products[i].name}</a>
                                 </strong>
                             </td>
                             <td>
                                 <form class="form-inline quantity-form">
                                     <button type="button" class="btn bg-trans btn-sm btn-dec"
-                                            ${sCartProductList[i].quantity <= 1 ? 'disabled' : ''}>
+                                            ${products[i].quantity <= 1 ? 'disabled' : ''}>
                                         <span class="oi oi-minus"></span>
                                     </button>
                                     <input class="form-control prod-qua ${validQuantity ? '' : 'is-invalid'}" 
                                            ${validQuantity ? '' : tooltipStr}
-                                           type="text" value="${sCartProductList[i].quantity}" disabled>
+                                           type="text" value="${products[i].quantity}" disabled>
                                     <button type="button" class="btn bg-trans btn-sm btn-inc"
-                                            ${sCartProductList[i].quantity >= productQuantity ? 'disabled ' + tooltipStr : ''}>
+                                            ${products[i].quantity >= productQuantity ? 'disabled ' + tooltipStr : ''}>
                                         <span class="oi oi-plus"></span>
                                     </button>
                                 </form>
                             </td>
-                            <td>${sCartProductList[i].price}$</td>
-                            <td>${sCartProductList[i].price * sCartProductList[i].quantity}$</td>
+                            <td>${products[i].price}$</td>
+                            <td>${products[i].price * products[i].quantity}$</td>
                             <td><span class="oi oi-trash btn btn-trans btn-del"></span></td>
                         </tr>`
                     );
 
                     prodElm.find('.btn-inc').click(function(event) {
                         event.stopPropagation();
-                        sCartProductList[i].quantity++;
+                        products[i].quantity++;
                         render();
                     });
                     prodElm.find('.btn-dec').click(function(event) {
                         event.stopPropagation();
-                        sCartProductList[i].quantity--;
+                        products[i].quantity--;
                         render();
                     });
                     prodElm.find('.btn-del').click(function(){
                         event.stopPropagation();
-                        sCartProductList.splice(i, 1);
+                        products.splice(i, 1);
                         render();
                     });
 
                     productListElm.append(prodElm);
-                    prods += sCartProductList[i].quantity;
+                    prods += products[i].quantity;
                 }
                 productCountElm.html(prods);
             });
@@ -110,23 +110,23 @@
             let productQuantity = response.data[0].quantity;
 
             let i = 0;
-            for(i = 0; i < sCartProductList.length; i++) {
-                if(sCartProductList[i].id === id){
-                    if(productQuantity < sCartProductList[i].quantity + quantity){
+            for(i = 0; i < products.length; i++) {
+                if(products[i].id === id){
+                    if(productQuantity < products[i].quantity + quantity){
                         alert('Không đủ hàng trong kho, thêm sản phẩm thất bại');
                         return;
                     }
-                    sCartProductList[i].quantity += quantity;
+                    products[i].quantity += quantity;
                     break;
                 }
             }
 
-            if(i === sCartProductList.length) {
+            if(i === products.length) {
                 if (productQuantity < quantity) {
                     alert('Không đủ hàng trong kho, thêm sản phẩm thất bại');
                     return;
                 }
-                sCartProductList.push({id, thumbnail, name, price, quantity});
+                products.push({id, thumbnail, name, price, quantity});
             }
 
             render();
@@ -135,7 +135,7 @@
 	}
 
 	function saveProductList(){
-	    localStorage.setItem('shoppingCart', JSON.stringify(sCartProductList));
+	    localStorage.setItem('shoppingCart', JSON.stringify(products));
     }
 })();
 

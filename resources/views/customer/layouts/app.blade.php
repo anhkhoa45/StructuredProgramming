@@ -115,7 +115,9 @@
                                             <hr>
                                             <div class="row justify-content-end">
                                                 <div class="col-auto">
-                                                    <button type="button" class="btn btn-danger">Payment -></button>
+                                                    <a href="{{ route('payment.get_payment') }}" class="btn btn-danger">
+                                                        Payment ->
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

@@ -8,6 +8,8 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
+$gray: #9F9FA3;
+$white: #DBF1FF;
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
@@ -33,4 +35,8 @@ $cyan: #6cb2eb;
 
 .max-width-50 {
     max-width: 50px;
+}
+
+.padding-25 {
+    padding: 25;
 }

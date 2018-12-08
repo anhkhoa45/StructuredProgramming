@@ -41,6 +41,10 @@ Route::namespace('Customer')->group(function() {
     Route::middleware('auth')->group(function() {
         Route::get('/user/profile', 'UserController@profile')->name('profile');
         Route::post('/user/update', 'UserController@update')->name('profile.update');
+
+        // Payment
+        Route::get('payment', 'PaymentController@getPayment')->name('payment.get_payment');
+        Route::post('payment/pay', 'PaymentController@pay')->name('payment.pay');
     });
 });
 
