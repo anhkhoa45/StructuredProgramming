@@ -26,7 +26,7 @@ class Product extends Model
     }
 
     public function getImageUrl(){
-        $prodImgStorage = new ProductImageStorage;
+        $prodImgStorage = new ProductImageStorage();
         return $prodImgStorage->getProductPublicImage($this);
     }
 }

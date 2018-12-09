@@ -1,17 +1,11 @@
 @extends('customer.layouts.app')
 
-@php
-    $prodImg = file_exists(public_path().'/storage/'."$product->id/".$product->image) ?
-                      '/storage/'."$product->id/".$product->image :
-                      '/storage/products/default.jpg';
-@endphp
-
 @section('content')
-    <div class="container product-detail">
+    <div class="container product-detail margin-top-30">
         <div class="row">
             <div class="col-md-4 left-box">
-                <div class="image-container">
-                    <img class="img-fluid" src={{ "/image/" . $product->image }} alt="">
+                <div class="image-container text-center">
+                    <img class="img-fluid" src={{ $product->getImageUrl() }} alt="">
                 </div>
             </div>
             <div class="col-md-8 right-box">
@@ -36,7 +30,7 @@
                         <button class="btn btn-warning" type="button"
                                 onclick="shoppingCart.addProduct({
                                     id: {{ $product->id }},
-                                    thumbnail: '{{ $prodImg }}',
+                                    thumbnail: '{{ $product->getImageUrl() }}',
                                     name: '{{ $product->name }}',
                                     price: {{ $product->price }},
                                     quantity: 1

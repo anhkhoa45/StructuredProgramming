@@ -221,7 +221,7 @@
                 @foreach ($bestSellerProductList as $item)
                   <li class="item">
                     <div class="product-img">
-                      <img src="/image/1.png" alt="Product Image">
+                      <img src="{{ $item->product->getImageUrl() }}" alt="Product Image">
                     </div>
                     <div class="product-info">
                       <a href="javascript:void(0)" class="product-title">{{ $item->product->name }}

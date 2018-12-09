@@ -44,5 +44,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\InvoiceItemServiceInterface',
             'App\Services\Implementation\InvoiceItemService'
         );
+        $this->app->bind(
+            'App\Storage\UserAvatarStorageInterface',
+            'App\Storage\LaravelImpl\UserAvatarStorage'
+        );
+
+
     }
 }

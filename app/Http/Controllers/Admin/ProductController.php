@@ -98,7 +98,7 @@ class ProductController extends Controller
             return redirect()->back()->withErrors($validator);
         } else {
             $this->productService->update($request, $id);
-            return redirect()->route('admin.setting.product.edit', $id);
+            return redirect()->route('admin.setting.product.show', $id);
         }
     }
 

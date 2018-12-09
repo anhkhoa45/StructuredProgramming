@@ -22,7 +22,7 @@ class ProductImageStorage extends Storage implements ProductImageStorageInterfac
      */
     function baseDir()
     {
-        return storage_path('app/public/products');
+        return storage_path('app/public/products/');
     }
 
     /**

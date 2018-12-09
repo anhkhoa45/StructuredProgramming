@@ -65,6 +65,11 @@
                 </table>
             </div>
         </div>
+        <div class="col-md-12 text-center mb-3">
+            <a href="{!! route('admin.setting.product.edit', $product->id) !!}" title="Edit" class="btn btn-warning">
+                <i class="fa fa-pencil"></i> {!! trans('admin/base.btn_edit') !!}
+            </a>
+        </div>
     </div>
     <!-- /.row -->
 </section>
