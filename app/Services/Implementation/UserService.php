@@ -11,6 +11,7 @@ namespace App\Services\Implementation;
 
 use App\Services\UserServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
+use App\Storage\UserAvatarStorageInterface;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +20,13 @@ use League\Flysystem\FileExistsException;
 class UserService implements UserServiceInterface
 {
     const PAGE_SIZE = 8;
+
+    protected $userAvatarStorage;
+
+    public function __construct(UserAvatarStorageInterface $userAvatarStorage)
+    {
+        $this->userAvatarStorage = $userAvatarStorage;
+    }
 
     /**
      * Rules create.
@@ -86,8 +94,7 @@ class UserService implements UserServiceInterface
 
         if($request->hasFile('avatar')){
             try{
-                $userAvatarStorage = new UserAvatarStorage();
-                $avatar = $userAvatarStorage->store($request->file('avatar'));
+                $avatar = $this->userAvatarStorage->store($request->file('avatar'));
             } catch (FileExistsException $e) {
                 throw $e;
             }
@@ -115,14 +122,14 @@ class UserService implements UserServiceInterface
         $avatar = $user->avatar;
 
         if($request->hasFile('avatar')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
+            $avatar = $this->userAvatarStorage->replace($user->avatar, $request->file('avatar'));
         }
+
         $user->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
+            'password' => $request->has('password') ? Hash::make($request->get('password')) : null,
+            'role_id' => $request->has('role_id') ? $request->get('role_id') : User::ROLE_USER,
             'avatar' => $avatar
         ]);
 

@@ -79,8 +79,7 @@ abstract class Storage implements StorageInterface
         }
 
         try {
-            $this->store($new);
-            return $new;
+            return $this->store($new);
         } catch (FileExistsException $e) {
             throw $e;
         }

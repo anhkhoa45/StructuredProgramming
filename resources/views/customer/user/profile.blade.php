@@ -33,7 +33,7 @@
     <div class="col-sm-3">
       <div class="text-center">
         <div class="col-sm-10"><h2>Your Profile</h2></div>
-        <img src="/storage/avatars/{{ $user->getAvatarUrl() }}" class="avatar img-circle img-thumbnail" alt="avatar" style="height:250px;">
+        <img src="{{ $user->getAvatarUrl() }}" class="avatar img-circle img-thumbnail" alt="avatar" style="height:250px;">
       </div></hr><br>
 
         </div><!--/col-3-->
@@ -45,38 +45,50 @@
                       <div class="form-group">
                         <div class="col-xs-6">
                               <label for="profile_username"><h4>Username</h4></label>
-                              <input type="text" class="form-control" name="profile_username" id="profile_username" value={{ $user->name }} title="enter your user name">
+                              <input type="text" class="form-control"
+                                     name="name" id="profile_username"
+                                     value="{{ $user->name }}" title="Tên đăng nhập">
                           </div>
                       </div>
           
                       <div class="form-group">
                           <div class="col-xs-6">
                               <label for="profile_email"><h4>Email</h4></label>
-                              <div type="email" class="form-control" name="profile_email" id="profile_email">{{ $user->email }}</div>
+                              <input type="text" class="form-control"
+                                     name="email" id="email"
+                                     value="{{ $user->email }}" title="Nhập email ">
                           </div>
                       </div>
                       
                       <div class="form-group">
                           <div class="col-xs-6">
                               <label for="profile_password"><h4>Password</h4></label>
-                              <input type="password" class="form-control" name="profile_password" id="profile_password" title="enter your password.">
+                              <input type="password" class="form-control"
+                                     name="password" id="profile_password"
+                                     title="Mật khẩu mới">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-xs-6">
                             <label for="profile_password2"><h4>Verify</h4></label>
-                              <input type="password" class="form-control" name="profile_password2" id="profile_password2" title="enter your password2.">
+                              <input type="password" class="form-control"
+                                     name="password_confirmation" id="profile_password2"
+                                     title="Xác nhận mật khẩu mới">
                           </div>
                       </div>
                       <div class="form-group">
                             <input type="file" class="form-control-file" name="avatar" id="avatarFile" aria-describedby="fileHelp">
-                            <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not be more than 2MB.</small>
+                            <small id="fileHelp" class="form-text text-muted">
+                                Please upload a valid image file. Size of image should not be more than 2MB.
+                            </small>
                         </div>
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
-                              	<button id="submit-button" class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                               	{{-- <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button> --}}
+                              	<button id="submit-button" class="btn btn-lg btn-success" type="submit">
+                                    <i class="glyphicon glyphicon-ok-sign"></i>
+                                    Save
+                                </button>
                             </div>
                       </div>
               	</form>
