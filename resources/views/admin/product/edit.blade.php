@@ -50,7 +50,7 @@
                                 </label>
                                 <div class="col-sm-9">
                                     <textarea autocomplete="off" type="text" class="form-control" name="description"
-                                              value="{!! old('description') ?: $product -> description !!}"></textarea>
+                                              value="{!! old('description') ?: $product->description !!}">{!! old('description') ?: $product->description !!}</textarea>
                                     {!! $errors->first('description', '<span class="help-block">:message</span>') !!}
                                 </div>
                             </div>
