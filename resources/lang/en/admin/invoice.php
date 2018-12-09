@@ -23,5 +23,7 @@ return [
     'updated_at' => 'Updated at',
     'address'=>'Address',
     'phone'=>'Phone',
-    'btn_add_invoiceitem'=>'add item'
+    'btn_add_invoiceitem'=>'add item',
+    'username'=>'User name',
+    'userid'=> 'User ID'
 ];
