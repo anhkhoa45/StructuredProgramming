@@ -275,14 +275,10 @@
         pointHighlightFill  : '#fff',
         pointHighlightStroke: 'rgb(220,220,220)',
         data                : [
-          <?php
-          if (count($monthlyRevenue) > 0) {
-            echo $monthlyRevenue[0]->total_amount;
-            for ($i=1; $i<12; $i++) {
-              echo "," . $monthlyRevenue[$i]->total_amount;
-            }
-          }
-          ?>
+            @foreach($monthlyRevenue as $index => $o)
+            @if($index == 12) @break @endif
+            {{ $o->total_amount . ',' }}
+            @endforeach
         ]
       },
     //   {
@@ -330,7 +326,7 @@
     // Boolean - Whether to fill the dataset with a color
     datasetFill             : true,
     // String - A legend template
-    legendTemplate          : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',
+    {{--legendTemplate          : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].lineColor%>\'></span><%=datasets[i].label%></li><%}%></ul>',--}}
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
     maintainAspectRatio     : true,
     // Boolean - whether to make the chart responsive to window resizing
@@ -356,12 +352,10 @@
             highlightFill: "rgba(220,220,220,0.75)",
             highlightStroke: "rgba(220,220,220,1)",
             data : [
-              <?php
-                echo $monthlyOrderedInvoiceNum[0]->ordered_invoice_num;
-                for ($i=1; $i<12; $i++) {
-                  echo "," . $monthlyOrderedInvoiceNum[$i]->ordered_invoice_num;
-                }
-              ?>
+                @foreach($monthlyOrderedInvoiceNum as $index => $o)
+                @if($index == 12) @break @endif
+                {{ $o->ordered_invoice_num . ',' }}
+                @endforeach
             ]
         },
         {
@@ -370,12 +364,10 @@
             highlightFill : "rgba(151,187,205,0.75)",
             highlightStroke : "rgba(151,187,205,1)",
             data : [
-              <?php
-                echo $monthlyPaidInvoiceNum[0]->paid_invoice_num;
-                for ($i=1; $i<12; $i++) {
-                  echo "," . $monthlyPaidInvoiceNum[$i]->paid_invoice_num;
-                }
-              ?>
+                @foreach($monthlyOrderedInvoiceNum as $index => $o)
+                @if($index == 12) @break @endif
+                {{ $o->paid_invoice_num . ',' }}
+                @endforeach
             ]
         }
     ]

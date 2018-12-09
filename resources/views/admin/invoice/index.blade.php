@@ -1,6 +1,11 @@
 @extends('admin.layouts.master')
-@section('content')
 
+@section('style')
+    @parent
+    <link rel="stylesheet" href="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+@endsection
+
+@section('content')
 <section class="content-header">
     <h1>
         {!! trans('admin/product.mg_product') !!}
@@ -101,7 +106,9 @@
 <!-- /.section -->
 @stop
 @section('script')
-@parent 
+@parent
+<script src="/adminlte/bower_components/moment/moment.js"></script>
+<script src="/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script>
     $(function () {
         $('input[name="daterange"]').daterangepicker({
