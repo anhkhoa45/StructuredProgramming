@@ -11,17 +11,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 
 use App\InvoiceItem;
+use App\Product;
 use App\Services\InvoiceItemServiceInterface;
 use App\Http\Controllers\Controller;
 
 class InvoiceItemController extends Controller
 {
-    protected $productService;
+    protected $invoiceItemService;
     //
 
-    public function __construct(InvoiceItemServiceInterface $productService)
+    public function __construct(InvoiceItemServiceInterface $invoiceItemService)
     {
-        $this->productService = $productService;
+        $this->invoiceItemService = $invoiceItemService;
     }
 
     /**
@@ -51,6 +52,7 @@ class InvoiceItemController extends Controller
      */
     public function store(Request $request)
     {
+
     }
 
     /**
@@ -71,7 +73,7 @@ class InvoiceItemController extends Controller
      */
     public function edit($id)
     {
-        $transaction = $this->productService->find($id);
+        $transaction = $this->invoiceItemService->find($id);
         if (is_null($transaction)) {
             abort(404);
         }
@@ -87,11 +89,11 @@ class InvoiceItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = \Validator::make($request->all(), $this->productService->rulesUpdate($id));
+        $validator = \Validator::make($request->all(), $this->invoiceItemService->rulesUpdate($id));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         } else {
-            $this->productService->update($request, $id);
+            $this->invoiceItemService->update($request, $id);
             return redirect()->route('admin.setting.product.edit', $id);
         }
     }
@@ -104,20 +106,38 @@ class InvoiceItemController extends Controller
      */
     public function destroy($id)
     {
-        $this->productService->delete($id);
+        $this->invoiceItemService->delete($id);
         return redirect()->back();
     }
     public function multiple_update(Request $request){
+        $return = app('App\Http\Controllers\Admin\InvoiceController')->update($request,$request->invoiceid);
 
         for($i=0;$i<count($request->quantities);$i++){
-            $transaction=$this->productService->find($request->transaction_ids[$i]);
+            $transaction=$this->invoiceItemService->find($request->transaction_ids[$i]);
             $product=$transaction->product;
             $product->quantity= $product->quantity-($request->quantities[$i]-$transaction->quantity);
             $transaction->quantity=$request->quantities[$i];
             $transaction->save();
         }
+
+        for($i=0;$i<count($request->new_product_id);$i++){
+//            if($request->new_product_id $request->quantities)
+            $quantity=$request->new_quantities[$i];
+            $product_id=$request->new_product_id[$i];
+            $product=Product::find($product_id);
+            if(empty($product)||$product->quantity<$quantity){
+                return redirect()->back();
+
+            }
+            $invoice_item=InvoiceItem::create(
+                [ 'invoice_id'=>$request->invoiceid, 'product_id'=>$product_id,'quantity'=>$quantity]
+            );
+            $invoice_item->save();
+
+        }
+
         return redirect()->back();
-        echo 'hello';
+
     }
 }
 

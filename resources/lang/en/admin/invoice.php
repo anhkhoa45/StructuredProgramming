@@ -22,5 +22,8 @@ return [
     'created_at' => 'Created at',
     'updated_at' => 'Updated at',
     'address'=>'Address',
-    'phone'=>'Phone'
+    'phone'=>'Phone',
+    'btn_add_invoiceitem'=>'add item',
+    'username'=>'User name',
+    'userid'=> 'User ID'
 ];

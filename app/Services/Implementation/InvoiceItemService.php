@@ -46,7 +46,7 @@ class InvoiceItemService implements InvoiceItemServiceInterface
         }
 
     }
-    
+
     /**
      * Get a number of best seller products
      * @param $num
