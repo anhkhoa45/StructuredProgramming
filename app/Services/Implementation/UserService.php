@@ -18,7 +18,7 @@ use League\Flysystem\FileExistsException;
 
 class UserService implements UserServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
     /**
      * Rules create.
@@ -61,10 +61,9 @@ class UserService implements UserServiceInterface
         foreach ($orderArr as $order) {
             $data = $data->orderBy($order, $sortBy);
         }
-        if (!is_null($searchBy) && $this->checkColumn($searchBy)) {
+        if (!is_null($searchBy)) {
             $data = $data->where($searchBy, 'LIKE', "%$searchText%");
         }
-
         return $data->paginate(self::PAGE_SIZE);
     }
 
@@ -93,14 +92,11 @@ class UserService implements UserServiceInterface
                 throw $e;
             }
         }
-
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'role_id' => $request->get('role_id'),
-            'active' => $active,
             'avatar' => $avatar
         ]);
 
@@ -122,13 +118,11 @@ class UserService implements UserServiceInterface
             $userAvatarStorage = new UserAvatarStorage();
             $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
         }
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
         $user->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'role_id' => $request->get('role_id'),
-            'active' => $active,
             'avatar' => $avatar
         ]);
 
@@ -151,6 +145,6 @@ class UserService implements UserServiceInterface
      * @return user number
      */
     public function count(){
-        return User::where('active', User::ACTIVE)->count();
+        return User::count();
     }
 }

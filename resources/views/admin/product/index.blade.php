@@ -101,11 +101,3 @@
 </section>
 <!-- /.section -->
 @stop
-@section('script')
-@parent 
-<script>
-    $(function () {
-        $('.laravel-sort').laravelSort();
-    });
-</script>
-@stop

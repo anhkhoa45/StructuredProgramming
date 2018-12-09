@@ -63,19 +63,11 @@
                                 {!! $errors->first('role_id', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
-                        <div class="form-group {!! $errors->has('active') ? 'has-error' : '' !!} " >
-                            <label class="col-sm-2 control-label"> {!! trans('admin/user.active') !!}</label>
-                            <div class="col-sm-9">
-                                <input type="checkbox" name="active" />
-                                {!! $errors->first('active', '<span class="help-block">:message</span>') !!}
-                            </div>
-                        </div>
                         <div class="form-group {!! $errors->has('avatar') ? 'has-error' : '' !!} " >
                             <label class="col-sm-2 control-label"> {!! trans('admin/user.avatar') !!}</label>
                             <div class="col-sm-9">
                                 <div class="image-preview-wrapper">
                                     <div class="image-preview">
-                                        <label for="image-input" class="image-label">Choose File</label>
                                         <input type="file" name="avatar" class="image-input"/>
                                     </div>
                                 </div>

@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class ProductService implements ProductServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
     /**
      * Rules create.
