@@ -20,7 +20,7 @@ use App\User;
 
 class InvoiceService implements InvoiceServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
     /**
      * Rules create.

@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('secret'),
             'name' => 'Admin',
             'role_id' => 1,
-            'active' => 1,
             'avatar' => 'uploads/users/avatars/default.png',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
@@ -29,7 +28,6 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('secret'),
                 'name' => 'Test'.$i,
                 'role_id' => 2,
-                'active' => 1,
                 'avatar' => 'uploads/users/avatars/default.png',
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
