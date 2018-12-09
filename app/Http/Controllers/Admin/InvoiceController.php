@@ -26,7 +26,6 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $invoices = $this->productService->index($request);
-//        return $invoices;
         return view('admin/invoice/index', compact('invoices'));
     }
 
