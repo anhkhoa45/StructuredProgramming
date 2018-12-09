@@ -100,10 +100,11 @@ class UserController extends Controller
         $validator = \Validator::make($request->all(), $this->userService->rulesUpdate($id));
         if ($validator->fails()) {
              return redirect()->back()->withErrors($validator);
-        } else {
-            $this->userService->update($request, $id);
-            return redirect()->route('admin.setting.user.edit', $id);
         }
+
+        $this->userService->update($request, $id);
+        return redirect()->route('admin.setting.user.show', $id);
+
     }
 
     /**
