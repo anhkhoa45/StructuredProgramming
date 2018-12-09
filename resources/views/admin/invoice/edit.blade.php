@@ -33,13 +33,15 @@
                     <!-- /.box-header -->
 
                     <div class="box-body no-padding">
-                        <div class="col-sm-4">
+
                             <!-- form start -->
-                            <form class="form-horizontal" method="POST"
-                                  action="{!! route('admin.setting.invoice.update', $invoice->id) !!}"
+                            <form class="form-horizontal" method="GET"
+                                  action="{!! route('admin.invoices_item_multiple_update') !!}"
                                   enctype="multipart/form-data">
-                                <input type="hidden" name="_method" value="PUT"/>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                <div class="col-sm-4">
+                                <input type="hidden" name="invoiceid" value="{{ $invoice->id}}"/>
+
                                 <div class="box-body">
 
                                     <div class="form-group">
@@ -99,73 +101,48 @@
 
 
                                 </div>
-                                <div class="box-footer">
-                                    <button type="submit" class="btn btn-default pull-right custom-button"
-                                            style="margin-left: 10px">
-                                        <i class="fa fa-save"></i> {!! trans('admin/base.btn_save') !!}
-                                    </button>
-                                    <a href="{!! route('admin.setting.invoice.index') !!}"
-                                       class="btn btn-default pull-right btn-default-hover">
-                                        <i class="fa fa-times"></i> {!! trans('admin/base.btn_cancel') !!}
-                                    </a>
-                                </div>
-                            </form>
 
-                            <!-- /.form end -->
-                        </div>
+
+                                    <!-- /.form end -->
+                                </div>
+
                         <div class="col-sm-8">
-                            <form class="form-horizontal" method="GET"
-                                  action="{!! route('admin.transactions_multiple_update') !!}">
-                                <table class="table">
+                                <table class="table" id="invoice_item_table">
                                     <th><a data-field="id" class="laravel-sort">ID</a></th>
-                                    <th><a data-field="user"
-                                           class="laravel-sort">{!! trans('admin/transaction.quantity') !!}</a></th>
+                                    <th><a data-field="address"
+                                           class="laravel-sort">ID Product</a></th>
                                     <th><a data-field="address"
                                            class="laravel-sort">{!! trans('admin/product.name') !!}</a></th>
+                                    <th><a data-field="user"
+                                           class="laravel-sort">{!! trans('admin/transaction.quantity') !!}</a></th>
+
                                     <th><a data-field="phone"
                                            class="laravel-sort">{!! trans('admin/product.image') !!}</a></th>
 
 
-                                    @foreach ($invoice->transactions as $transaction)
+                                    @foreach ($invoice->transactions as $invoiceitem)
                                         <tr>
-                                            <td>{{$transaction->id}}
+                                            <td>{{$invoiceitem->id}}
                                                 <input type="hidden" name="transaction_ids[]"
-                                                       id="transaction_id-{{$transaction->id}}" value="{{$transaction->id}}"/></td>
+                                                       id="transaction_id-{{$invoiceitem->id}}" value="{{$invoiceitem->id}}"/></td>
+                                            <td>{{'#'.$invoiceitem->product->id}}</td>
+                                            <td>{{$invoiceitem->product->name}}</td>
                                             <td><input type="text" class="form-control" name="quantities[]"
-                                                       id="quantity-{{$transaction->id}}"
-                                                       value="{{$transaction->quantity}}"></td>
-                                            <td>{{'#'.$transaction->product->id.'  '.$transaction->product->name}}</td>
-                                            <td><img src="{{$transaction->product->getImageUrl()}}"
+                                                       id="quantity-{{$invoiceitem->id}}"
+                                                       value="{{$invoiceitem->quantity}}"></td>
+
+                                            <td><img src="{{$invoiceitem->product->getImageUrl()}}"
                                                      class="product-image img-responsive" style="width:150px"
                                                      alt="{!! trans('admin/product.image') !!}"></td>
                                             <td>
                                                 <div class="btn-group-action">
                                                     <div class="btn-group pull-right">
-                                                        <a href="{!! route('admin.setting.invoice.show', $invoice->id) !!}"
-                                                           title="{!! trans('admin/base.btn_edit') !!}"
-                                                           class="edit btn btn-default">
-                                                            {!! trans('admin/base.btn_edit') !!}
+                                                        <a title="{!! trans('admin/base.btn_delete') !!}"
+                                                           class="delete confirm btn btn-default"
+                                                           href="{!! route('admin.setting.invoiceitem_destroy', $invoiceitem->id) !!}">
+                                                            <i class="fa fa-trash-o"></i>
+                                                            {!! trans('admin/base.btn_delete') !!}
                                                         </a>
-                                                        <button class="btn btn-default dropdown-toggle"
-                                                                data-toggle="dropdown">
-                                                            <i class="fa fa-caret-down"></i>&nbsp;
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li>
-                                                                <form method="POST"
-                                                                      action="{!! route('admin.setting.transaction.destroy', $transaction->id) !!}"
-                                                                      class="form-destroy">
-                                                                    <input type="hidden" name="_method" value="DELETE"/>
-                                                                    <input type="hidden" name="_token"
-                                                                           value="{{ csrf_token() }}">
-                                                                    <input type="submit" class="hidden">
-                                                                </form>
-                                                                <a title="{!! trans('admin/base.btn_delete') !!}"
-                                                                   class="delete confirm">
-                                                                    <i class="fa fa-trash-o"></i> {!! trans('admin/base.btn_delete') !!}
-                                                                </a>
-                                                            </li>
-                                                        </ul>
                                                     </div>
                                                 </div>
                                             </td>
@@ -174,14 +151,20 @@
                                 </table>
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-default pull-right custom-button"
-                                            style="margin-left: 10px">
+                                            >
                                         <i class="fa fa-save"></i> {!! trans('admin/base.btn_save') !!}
                                     </button>
                                     <a href="{!! route('admin.setting.invoice.index') !!}"
-                                       class="btn btn-default pull-right btn-default-hover">
+                                       class="btn btn-default pull-right btn-default-hover" style="margin-left: 10px;margin-right: 10px">
                                         <i class="fa fa-times"></i> {!! trans('admin/base.btn_cancel') !!}
                                     </a>
+                                    <div id="btn_add_new_invoice_item"
+                                       class="btn btn-default pull-right btn-default-hover">
+                                            <i class="fa fa-plus"></i> {!! trans('admin/invoice.btn_add_invoiceitem') !!}
+                                    </div>
                                 </div>
+                        </div>
+
                             </form>
 
 
@@ -201,5 +184,8 @@
 @stop
 @section('script')
     @parent
+    <script src="{!! asset('js/btn_add_invoice_item_to_invoice.js') !!}"></script>
     <script src="{!! asset('js/nhn-user.js') !!}"></script>
+
+
 @stop

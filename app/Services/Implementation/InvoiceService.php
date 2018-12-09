@@ -27,10 +27,6 @@ class InvoiceService implements InvoiceServiceInterface
     public function rulesCreate()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'password' => 'required|confirmed|min:4',
-            'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
         ];
     }
 
@@ -41,8 +37,7 @@ class InvoiceService implements InvoiceServiceInterface
     public function rulesUpdate($id)
     {
         $rules = $this->rulesCreate();
-        $rules['password'] = 'nullable|confirmed|min:4';
-        $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
+//        $rules['password'] = 'nullable|confirmed|min:4';
         return $rules;
     }
 
@@ -86,28 +81,28 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function store(Request $request)
     {
-        $avatar = '';
-
-        if($request->hasFile('avatar')){
-            try{
-                $userAvatarStorage = new UserAvatarStorage();
-                $avatar = $userAvatarStorage->store($request->file('avatar'));
-            } catch (FileExistsException $e) {
-                throw $e;
-            }
-        }
-
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
-        ]);
-
-        return $user;
+//        $avatar = '';
+//
+//        if($request->hasFile('avatar')){
+//            try{
+//                $userAvatarStorage = new UserAvatarStorage();
+//                $avatar = $userAvatarStorage->store($request->file('avatar'));
+//            } catch (FileExistsException $e) {
+//                throw $e;
+//            }
+//        }
+//
+//        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
+//        $user = Invoice::create([
+//            'name' => $request->get('name'),
+//            'email' => $request->get('email'),
+//            'password' => Hash::make($request->get('password')),
+//            'role_id' => $request->get('role_id'),
+//            'active' => $active,
+//            'avatar' => $avatar
+//        ]);
+//
+//        return $user;
     }
 
     /**
@@ -117,25 +112,17 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $invoice = Invoice::find($id);
 
-        $avatar = $user->avatar;
+        $invoice->update([
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
+//            'delivered' => Hash::make($request->get('delivered')),
+//            'paid' => $request->get('paid'),
 
-        if($request->hasFile('avatar')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
-        }
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user->update([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
         ]);
 
-        return $user;
+        return $invoice;
     }
 
     /**

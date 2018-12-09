@@ -28,10 +28,6 @@ class InvoiceItemService implements InvoiceItemServiceInterface
     public function rulesCreate()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'password' => 'required|confirmed|min:4',
-            'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
         ];
     }
 
@@ -42,8 +38,6 @@ class InvoiceItemService implements InvoiceItemServiceInterface
     public function rulesUpdate($id)
     {
         $rules = $this->rulesCreate();
-        $rules['password'] = 'nullable|confirmed|min:4';
-        $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
         return $rules;
     }
 
@@ -70,28 +64,29 @@ class InvoiceItemService implements InvoiceItemServiceInterface
      */
     function store(Request $request)
     {
-        $avatar = '';
+//        $avatar = '';
+//
+//        if($request->hasFile('avatar')){
+//            try{
+//                $userAvatarStorage = new UserAvatarStorage();
+//                $avatar = $userAvatarStorage->store($request->file('avatar'));
+//            } catch (FileExistsException $e) {
+//                throw $e;
+//            }
+//        }
+//
+//        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
+//        $user = User::create([
+//            'name' => $request->get('name'),
+//            'email' => $request->get('email'),
+//            'password' => Hash::make($request->get('password')),
+//            'role_id' => $request->get('role_id'),
+//            'active' => $active,
+//            'avatar' => $avatar
+//        ]);
+//
+//        return $user;
 
-        if($request->hasFile('avatar')){
-            try{
-                $userAvatarStorage = new UserAvatarStorage();
-                $avatar = $userAvatarStorage->store($request->file('avatar'));
-            } catch (FileExistsException $e) {
-                throw $e;
-            }
-        }
-
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
-        ]);
-
-        return $user;
     }
 
     /**
