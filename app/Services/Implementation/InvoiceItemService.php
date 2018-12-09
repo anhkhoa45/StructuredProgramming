@@ -19,7 +19,7 @@ use League\Flysystem\FileExistsException;
 
 class InvoiceItemService implements InvoiceItemServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
 
     /**

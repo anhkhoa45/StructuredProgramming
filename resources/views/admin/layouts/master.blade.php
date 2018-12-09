@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="/adminlte/dist/css/skins/_all-skins.min.css">
     @show
 
-
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">

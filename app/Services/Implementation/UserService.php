@@ -92,8 +92,6 @@ class UserService implements UserServiceInterface
                 throw $e;
             }
         }
-
-        dd($avatar);
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
