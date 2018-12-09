@@ -31,7 +31,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row btn-container">
+                <div class="row btn-container p-3">
                     <div class="col-md-12">
                         <button class="btn btn-warning" type="button"
                                 onclick="shoppingCart.addProduct({
@@ -41,9 +41,8 @@
                                     price: {{ $product->price }},
                                     quantity: 1
                                     })">
-                            Add to cart
+                            Thêm vào giỏ
                         </button>
-                        <button class="btn btn-danger" type="button">Buy</button>
                     </div>
                 </div>
             </div>

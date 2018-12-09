@@ -19,35 +19,8 @@ use League\Flysystem\FileExistsException;
 
 class InvoiceItemService implements InvoiceItemServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
-    /**
-     * Rules create.
-     * @return array
-     */
-    public function rulesCreate()
-    {
-        return [
-        ];
-    }
-
-    /**
-     * Rules update.
-     * @return array
-     */
-    public function rulesUpdate($id)
-    {
-        $rules = $this->rulesCreate();
-        return $rules;
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    function index(Request $request)
-    {
-    }
 
     /**
      * @param $id
@@ -56,65 +29,6 @@ class InvoiceItemService implements InvoiceItemServiceInterface
     function find($id)
     {
         return InvoiceItem::find($id);
-    }
-
-    /**
-     * @param $request
-     * @return mixed
-     */
-    function store(Request $request)
-    {
-//        $avatar = '';
-//
-//        if($request->hasFile('avatar')){
-//            try{
-//                $userAvatarStorage = new UserAvatarStorage();
-//                $avatar = $userAvatarStorage->store($request->file('avatar'));
-//            } catch (FileExistsException $e) {
-//                throw $e;
-//            }
-//        }
-//
-//        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-//        $user = User::create([
-//            'name' => $request->get('name'),
-//            'email' => $request->get('email'),
-//            'password' => Hash::make($request->get('password')),
-//            'role_id' => $request->get('role_id'),
-//            'active' => $active,
-//            'avatar' => $avatar
-//        ]);
-//
-//        return $user;
-
-    }
-
-    /**
-     * @param $request
-     * @param $id
-     * @return mixed
-     */
-    function update(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        $avatar = $user->avatar;
-
-        if($request->hasFile('avatar')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
-        }
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user->update([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
-        ]);
-
-        return $user;
     }
 
     /**
@@ -131,5 +45,18 @@ class InvoiceItemService implements InvoiceItemServiceInterface
             $transaction->delete();
         }
 
+    }
+
+    /**
+     * Get a number of best seller products
+     * @param $num
+     * @return InvoiceItem list of best seller Product
+     */
+    public function getBestSellerProductList($num) {
+        return InvoiceItem::groupBy('product_id')
+            ->selectRaw('product_id, sum(quantity) as sum')
+            ->orderBy('sum', 'desc')
+            ->take($num)
+            ->get();
     }
 }

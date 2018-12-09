@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class ProductService implements ProductServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
     /**
      * Rules create.
@@ -167,5 +167,13 @@ class ProductService implements ProductServiceInterface
     function find($id)
     {
         return Product::find($id);
+    }
+    
+    /**
+     * Count product
+     * @return number
+     */
+    public function count(){
+        return Product::count();
     }
 }

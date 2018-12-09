@@ -13,11 +13,11 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Description</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Mô tả</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá</th>
+                                        <th>Tổng</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -30,7 +30,9 @@
                         <hr>
                         <div class="row justify-content-end">
                             <div class="col-auto">
-                                <button type="button" class="btn btn-danger">Payment -></button>
+                                <a href="{{ route('payment.get_payment') }}" type="button"  class="btn btn-danger">
+                                    Thanh toán ->
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -38,4 +40,10 @@
             </div>
         </div>
     </li>
+
+    <script>
+        $(document).ready(function() {
+            window.shoppingCart = new ShoppingCart($('#shoppingCart'));
+        });
+    </script>
 </ul>

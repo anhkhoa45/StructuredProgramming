@@ -15,8 +15,14 @@ use Illuminate\Http\Request;
  * Interface ProductServiceInterface
  * @package App\Services\Interfaces
  */
-interface ProductServiceInterface extends ServiceInterface
+interface ProductServiceInterface extends CRUDServiceInterface
 {
+    /**
+     * Count product
+     * @return number
+     */
+    public function count();
+    
     /**
      * @param $request
      * @return mixed

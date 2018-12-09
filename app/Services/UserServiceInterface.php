@@ -9,7 +9,11 @@
 namespace App\Services;
 
 
-interface UserServiceInterface extends ServiceInterface
+interface UserServiceInterface extends CRUDServiceInterface
 {
-
+    /**
+     * Count user
+     * @return user number
+     */
+    function count();
 }

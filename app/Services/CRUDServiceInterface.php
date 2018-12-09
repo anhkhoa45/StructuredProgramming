@@ -11,30 +11,30 @@ use Illuminate\Http\Request;
 
 
 /**
- * Interface ServiceInterface
+ * Interface CRUDServiceInterface
  * @package App\Services
  */
-interface ServiceInterface
+interface CRUDServiceInterface
 {
-    /**
+    /** List all data
      * @param Request $request
      * @return mixed
      */
     function index(Request $request);
 
-    /**
+    /** Find by id
      * @param $id
      * @return mixed
      */
     function find($id);
 
-    /**
+    /** Store data
      * @param $request
      * @return mixed
      */
     function store(Request $request);
 
-    /**
+    /** Update data
      * @param $request
      * @param $id
      * @return mixed
@@ -46,4 +46,16 @@ interface ServiceInterface
      * @return mixed
      */
     function delete($id);
+
+    /**
+     * Rules create.
+     * @return array
+     */
+    public function rulesCreate();
+
+    /**
+     * Rules update.
+     * @return array
+     */
+    public function rulesUpdate($id);
 }

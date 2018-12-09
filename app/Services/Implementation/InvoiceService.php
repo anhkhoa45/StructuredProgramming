@@ -9,16 +9,20 @@
 namespace App\Services\Implementation;
 
 
+use App\InvoiceItem;
 use App\Services\InvoiceServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
 use App\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class InvoiceService implements InvoiceServiceInterface
 {
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 8;
 
     /**
      * Rules create.
@@ -27,6 +31,10 @@ class InvoiceService implements InvoiceServiceInterface
     public function rulesCreate()
     {
         return [
+            'receiver' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|min:10|max:14',
+            'total' => 'required',
         ];
     }
 
@@ -36,9 +44,7 @@ class InvoiceService implements InvoiceServiceInterface
      */
     public function rulesUpdate($id)
     {
-        $rules = $this->rulesCreate();
-//        $rules['password'] = 'nullable|confirmed|min:4';
-        return $rules;
+        return $this->rulesCreate();
     }
 
     /**
@@ -81,28 +87,28 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function store(Request $request)
     {
-//        $avatar = '';
-//
-//        if($request->hasFile('avatar')){
-//            try{
-//                $userAvatarStorage = new UserAvatarStorage();
-//                $avatar = $userAvatarStorage->store($request->file('avatar'));
-//            } catch (FileExistsException $e) {
-//                throw $e;
-//            }
-//        }
-//
-//        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-//        $user = Invoice::create([
-//            'name' => $request->get('name'),
-//            'email' => $request->get('email'),
-//            'password' => Hash::make($request->get('password')),
-//            'role_id' => $request->get('role_id'),
-//            'active' => $active,
-//            'avatar' => $avatar
-//        ]);
-//
-//        return $user;
+
+        $invoice = Invoice::create([
+            'user_id' => Auth::user()->id,
+            'receiver' => $request->get('receiver'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
+            'total' => $request->get('total'),
+            'paid' => $request->get('method') == 'cash' ? 0 : 1,
+            'payment_method' => $request->get('method'),
+            'status' => 'ordered'
+        ]);
+
+        $products = $request->get('products');
+        foreach ($products as $product) {
+            InvoiceItem::create([
+                'invoice_id' => $invoice->id,
+                'product_id' => $product["id"],
+                'quantity' => $product["quantity"],
+            ]);
+        }
+
+        return $invoice;
     }
 
     /**
@@ -115,11 +121,9 @@ class InvoiceService implements InvoiceServiceInterface
         $invoice = Invoice::find($id);
 
         $invoice->update([
+            'receiver' => $request->get('receiver'),
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
-//            'delivered' => Hash::make($request->get('delivered')),
-//            'paid' => $request->get('paid'),
-
         ]);
 
         return $invoice;
@@ -140,6 +144,64 @@ class InvoiceService implements InvoiceServiceInterface
             }
             $invoice->delete();
         }
+    }
 
+    /**
+     * Count total invoice
+     * @return total invoice num
+     */
+    function count() {
+        return Invoice::count();
+    }
+
+    /**
+     * Count total ordered invoice by month (from Jan -> Dec)
+     * @return Invoice
+     */
+    function getMonthlyOrderedInvoiceNum() {
+        return Invoice::select(DB::raw('count(*) as ordered_invoice_num'), DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+            ->whereYear('created_at', '=', 2018)
+            ->groupby('year', 'month')
+            ->get();
+    }
+
+    /**
+     * Count total paid invoice by month (from Jan -> Dec)
+     * @return Invoice
+     */
+    function getMonthlyPaidInvoiceNum() {
+        return Invoice::select(DB::raw('count(*) as paid_invoice_num'), DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+            ->whereYear('created_at', '=', 2018)
+            ->where('paid', '=', 1)
+            ->groupby('year', 'month')
+            ->get();
+    }
+
+    /**
+     * Return a number of lastest invoices
+     * @param $num number of invoices want to get
+     * @return Invoice
+     */
+    function getLatestInvoices($num) {
+        return Invoice::orderBy('created_at','desc')->take($num)->get();
+    }
+
+    /**
+     * Monthly revenue from January to December
+     * @return Invoice
+     */
+    function getMonthlyRevenue() {
+        return Invoice::select(DB::raw('sum(total) as total_amount'), DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+            ->whereYear('created_at', '=', 2018)
+            ->groupBy('year', 'month')
+            ->get();
+    }
+
+    function cancelInvoice($invoice) {
+        if($invoice->canBeCanceled()) {
+            $invoice->update([
+               'status' => 'canceled'
+            ]);
+        }
     }
 }

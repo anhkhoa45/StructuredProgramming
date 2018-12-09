@@ -20,11 +20,11 @@ class InvoiceItemsTableSeeder extends Seeder
     {
         for ($i = 1; $i < 180; $i++) {
             for ($j = 0; $j < rand(1, 2); $j++) {
-
-                DB::table('invoiceitems')->insert([
+                DB::table('invoice_items')->insert([
                     'invoice_id' => $i,
                     'product_id' => rand(1, 9),
-                    'quantity' => rand(1, 4)
+                    'quantity' => rand(1, 4),
+                    'amount' => 0
                 ]);
             }
 
