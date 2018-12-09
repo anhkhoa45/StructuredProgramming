@@ -120,7 +120,7 @@
                                            class="laravel-sort">{!! trans('admin/product.image') !!}</a></th>
 
 
-                                    @foreach ($invoice->transactions as $invoiceitem)
+                                    @foreach ($invoice->invoiceItems as $invoiceitem)
                                         <tr>
                                             <td>{{$invoiceitem->id}}
                                                 <input type="hidden" name="transaction_ids[]"

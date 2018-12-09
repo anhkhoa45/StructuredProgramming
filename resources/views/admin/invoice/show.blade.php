@@ -68,7 +68,7 @@
                 <th><a data-field="user" class="laravel-sort">{!! trans('admin/transaction.quantity') !!}</a></th>
                 <th><a data-field="address" class="laravel-sort">{!! trans('admin/product.name') !!}</a></th>
                 <th><a data-field="phone" class="laravel-sort">{!! trans('admin/product.image') !!}</a></th>
-            @foreach ($invoice->transactions as $transaction)
+            @foreach ($invoice->invoiceItems as $transaction)
                     <tr>
                         <td>{{$transaction->id}}</td>
                         <td>{{$transaction->quantity}}</td>

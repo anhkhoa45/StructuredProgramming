@@ -143,10 +143,10 @@ class InvoiceService implements InvoiceServiceInterface
     {
         $invoice = Invoice::find($id);
         if(!is_null($invoice)){
-            $transactions=$invoice->transactions;
-            foreach($transactions as $transaction)
+            $invoiceItems=$invoice->invoiceItems;
+            foreach($invoiceItems as $invoiceItem)
             {
-                $transaction->delete();
+                $invoiceItem->delete();
             }
             $invoice->delete();
         }
