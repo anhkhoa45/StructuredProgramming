@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-sm-8">
                     <select class="form-control" name="status">
-                        @foreach (["all","cancel","finish","sending","return"] as $field)
+                        @foreach (["all","ordered","delivering"," delivered","canceled"] as $field)
                             <option value="{!! $field !!}" {!! app('request')->input('status') == $field ? 'selected="selected"' : '' !!}>{!! $field !!}</option>
                         @endforeach
                     </select>
@@ -28,17 +28,17 @@
                 <input type="text" name="daterange" value="{!! app('request')->input('daterange',$yesterday.'-'. $date) !!}" />
                 </div>
             </div>
-            <div class="col-sm-2">
-                <div class="col-sm-4">
-                   <span class="label label-info">
-                    {!! trans('admin/invoice.username') !!}
-                    </span>
-                </div>
-                <div class="col-sm-8">
-                    <input type="text" name="username">
-                </div>
+            {{--<div class="col-sm-2">--}}
+                {{--<div class="col-sm-4">--}}
+                   {{--<span class="label label-info">--}}
+                    {{--{!! trans('admin/invoice.username') !!}--}}
+                    {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="col-sm-8">--}}
+                    {{--<input type="text" name="username">--}}
+                {{--</div>--}}
 
-            </div>
+            {{--</div>--}}
 
             <div class="col-sm-2">
                 <div class="col-sm-4">
@@ -47,7 +47,7 @@
                     </span>
                 </div>
                 <div class="col-sm-8">
-                    <input type="text" name="userid">
+                    <input type="text" name="user_id">
                 </div>
 
             </div>

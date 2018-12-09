@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                @include('admin.invoice.__search', ['fields' => ['id' => 'ID', 'name' => trans('admin/product.name')]])
+                @include('admin.invoice.__search', ['fields' => ['id' => 'ID', 'name' => trans('admin/invoice.name')]])
                 <div class="box-body no-padding">
                     <table class="table table-hover table-responsive">
                         <tbody>
@@ -104,11 +104,11 @@
 @parent 
 <script>
     $(function () {
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
     });
 </script>
 

@@ -53,10 +53,16 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function index(Request $request)
     {
-        $query = Invoice::where('user_id', '>',1);
+//        echo $request->query('daterange');
+//        return $request->query('status');
+        $query = Invoice::where('user_id', '>',-1);
         if($request->has('status') and $request->query('status')!="all"){
             $query = $query->where('status', 'LIKE', '%'.$request->query('status').'%');
         }
+        if($request->has('user_id') and strlen($request->user_id)>0){
+            $query =  $query->where('user_id', '=',$request->user_id);
+        }
+
         if($request->has('daterange')){
             $start_data=date('Y-m-d h:i:s',strtotime(trim(explode("-", $request->query('daterange'))[0])));
             $end_data=date('Y-m-d h:i:s',strtotime(trim(explode("-", $request->query('daterange'))[1]. ' + 23 hours 59 minutes')));
