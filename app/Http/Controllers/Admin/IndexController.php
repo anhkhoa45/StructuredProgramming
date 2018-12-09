@@ -36,7 +36,7 @@ class IndexController extends Controller
         $latestInvoices = $this->invoiceService->getLatestInvoices(7);
         $monthlyOrderedInvoiceNum = $this->invoiceService->getMonthlyOrderedInvoiceNum();
         $monthlyPaidInvoiceNum = $this->invoiceService->getMonthlyPaidInvoiceNum();
-        $bestSellerProductList = $this->invoiceItemService->getBestSellerProductList(5);
+        $bestSellerProductList = $this->invoiceItemService->getBestSellerProductList(10);
         $monthlyRevenue = $this->invoiceService->getMonthlyRevenue();
         // echo $monthlyPaidInvoiceNum;
         return view('admin/index', compact('userNum', 'productNum', 'invoiceNum','latestInvoices', 
