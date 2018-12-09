@@ -93,11 +93,11 @@
                         </div>
                         <a class="carousel-control-prev" href="#indexSlider" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only">Trước</span>
                         </a>
                         <a class="carousel-control-next" href="#indexSlider" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only">Tiếp</span>
                         </a>
                     </div>
                 </div>
@@ -123,9 +123,13 @@
                                                 quantity: 1
                                             })"
                                     >
-                                        Add to cart
+                                        Thêm vào giỏ
                                     </button>
-                                    <a href="{{ route('product_detail', ['id' => $product->id]) }}"><button type="button" class="btn btn-primary">Detail</button></a>
+                                    <a href="{{ route('product_detail', ['id' => $product->id]) }}">
+                                        <button type="button" class="btn btn-primary">
+                                            Chi tiết
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

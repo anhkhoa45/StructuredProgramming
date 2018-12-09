@@ -13,11 +13,18 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Services\Implementation\CashPaymentService;
 use App\Services\Implementation\StripePaymentService;
+use App\Services\InvoiceServiceInterface;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     private $paymentService;
+    private $invoiceService;
+
+    public function __construct(InvoiceServiceInterface $invoiceService)
+    {
+        $this->invoiceService = $invoiceService;
+    }
 
     function getPayment() {
         return view('customer.shopping.payment');
@@ -40,13 +47,15 @@ class PaymentController extends Controller
             'phone' => 'required|string|min:10|max:14',
             'total' => 'required',
         ]);
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
 
-        $invoice = $this->paymentService->pay($request);
+        $this->paymentService->pay($request);
+        $invoice = $this->invoiceService->store($request);
 
         // return view invoice;
-        return view('customer.shopping.invoice', ['invoice' => $invoice, 'clearCart' => true]);
+        return redirect()->route('invoice.show_n_clear_cart', ['id' => $invoice->id]);
     }
 }

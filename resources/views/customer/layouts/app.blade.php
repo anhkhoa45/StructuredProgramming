@@ -38,13 +38,13 @@
                     <!-- Search box -->
                     <form class="form-inline my-2 my-lg-0 m-auto" action="/" method="GET">
                         <div class="input-group">
-                            <input type="text" class="form-control input-lg" placeholder="Search product"
+                            <input type="text" class="form-control input-lg" placeholder="Sản phẩm"
                                    aria-label="Search" aria-describedby="button-addon2"
                                    @if(isset($searchData)) value="{{ $searchData['name'] }}" @endif
                                    name="name">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
-                                    Search
+                                    Tìm kiếm
                                 </button>
                             </div>
                         </div>
@@ -70,11 +70,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('invoice.index') }}">Đơn hàng của tôi</a>
-                                    <a class="dropdown-item" href="{{ route('profile') }}">User Profile</a>
+                                    <a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Đăng xuất
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -134,11 +134,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/shopping_cart.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            window.shoppingCart = new ShoppingCart($('#shoppingCart'));
-        });
-    </script>
     @yield('script')
 </body>
 </html>

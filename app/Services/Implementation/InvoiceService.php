@@ -94,8 +94,9 @@ class InvoiceService implements InvoiceServiceInterface
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
             'total' => $request->get('total'),
-            'paid' => $request->get('method') == 'cash' ? 1 : 0,
-            'delivered' => 0
+            'paid' => $request->get('method') == 'cash' ? 0 : 1,
+            'payment_method' => $request->get('method'),
+            'status' => 'ordered'
         ]);
 
         $products = $request->get('products');
@@ -117,25 +118,15 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $invoice = Invoice::find($id);
 
-        $avatar = $user->avatar;
-
-        if($request->hasFile('avatar')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
-        }
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user->update([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
+        $invoice->update([
+            'receiver' => $request->get('receiver'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
         ]);
 
-        return $user;
+        return $invoice;
     }
 
     /**
@@ -204,5 +195,13 @@ class InvoiceService implements InvoiceServiceInterface
             ->whereYear('created_at', '=', 2018)
             ->groupBy('year', 'month')
             ->get();
+    }
+
+    function cancelInvoice($invoice) {
+        if($invoice->canBeCanceled()) {
+            $invoice->update([
+               'status' => 'canceled'
+            ]);
+        }
     }
 }

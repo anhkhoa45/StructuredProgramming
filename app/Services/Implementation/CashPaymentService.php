@@ -14,17 +14,13 @@ use Illuminate\Http\Request;
 
 class CashPaymentService implements PaymentServiceInterface
 {
-    private $invoiceService;
-
-    public function __construct()
-    {
-        $this->invoiceService = new InvoiceService();
-    }
-
-
     function pay(Request $request)
     {
         // call the InvoiceService to create invoice
-        return $this->invoiceService->store($request);
+    }
+
+    function refund($paymentInfo)
+    {
+        // TODO: Implement refund() method.
     }
 }

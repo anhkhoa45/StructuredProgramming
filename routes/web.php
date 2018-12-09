@@ -49,6 +49,9 @@ Route::namespace('Customer')->group(function() {
         //Invoice
         Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
         Route::get('/invoice/{id}', 'InvoiceController@show')->name('invoice.show');
+        Route::get('/invoice/c/{id}', 'InvoiceController@showAndClearCart')->name('invoice.show_n_clear_cart');
+        Route::get('/invoice/cancel/{id}', 'InvoiceController@cancel')->name('invoice.cancel');
+        Route::post('/invoice/update/{id}', 'InvoiceController@update')->name('invoice.edit');
     });
 });
 

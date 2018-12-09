@@ -35,7 +35,7 @@
                                     @endforeach
                                 </td>
                                 <td>{{ $total }}</td>
-                                <td></td>
+                                <td>{{ $invoice->getStatusString() }}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -31,4 +31,9 @@ class StripePaymentService implements PaymentServiceInterface
         // call the InvoiceService to create invoice
 
     }
+
+    function refund($paymentInfo)
+    {
+        // TODO: Implement refund() method.
+    }
 }

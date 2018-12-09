@@ -14,4 +14,5 @@ use Illuminate\Http\Request;
 interface PaymentServiceInterface
 {
     function pay(Request $request);
+    function refund($paymentInfo);
 }

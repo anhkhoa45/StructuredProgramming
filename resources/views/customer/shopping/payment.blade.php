@@ -27,7 +27,7 @@
                                 </label>
                                 <div class="col-lg-8 input-wrap">
                                     <input type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                                           name="phone" value="{{ old('receiver') }}" placeholder="Nhập số điện thoại">
+                                           name="phone" value="{{ old('phone') }}" placeholder="Nhập số điện thoại">
                                     <div class="invalid-feedback">
                                         {{ $errors->first('phone') }}
                                     </div>
@@ -35,11 +35,11 @@
                             </div>
                             <div class="form-group row">
                                 <label for="address" class="col-lg-4 control-label visible-lg-block">
-                                    Điện thoại di động <span class="text-bold text-danger">*</span>
+                                    Địa chỉ <span class="text-bold text-danger">*</span>
                                 </label>
                                 <div class="col-lg-8 input-wrap">
                                     <input type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                           name="address" value="{{ old('receiver') }}" placeholder="Nhập địa chỉ giao hàng">
+                                           name="address" value="{{ old('address') }}" placeholder="Nhập địa chỉ giao hàng">
                                     <div class="invalid-feedback">
                                         {{ $errors->first('address') }}
                                     </div>
@@ -71,11 +71,11 @@
                         <table class="product-table table">
                             <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Description</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
+                                <th>Sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Tổng</th>
                             </tr>
                             </thead>
                             <tbody id="prodList">
@@ -91,6 +91,16 @@
                     </div>
                 </div>
             </form>
+            <div id="alertCartEmpty" class="row" style="display: none">
+                <div class="col-md-12">
+                    <div class="alert-danger p-3">
+                        Không có hàng trong giỏ, vui lòng thêm hàng vào giỏ trước khi thanh toán!
+                    </div>
+                    <div class="pl-3 mt-3">
+                        <a href="{{ route('index') }}">Quay về trang chủ</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 @endsection
@@ -98,14 +108,19 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            var prodListElm = $('#prodList');
-            var prodInpElm = $('#prodInp');
-
             var products = JSON.parse(localStorage.getItem('shoppingCart'));
             if(!products) {
                 alert('Đã có lỗi xảy ra, vui lòng thử lại sau!');
                 window.history.back();
             }
+            if(products.length === 0) {
+                $('#checkoutForm').css('display', 'none');
+                $('#alertCartEmpty').css('display', 'block');
+                return;
+            }
+
+            var prodListElm = $('#prodList');
+            var prodInpElm = $('#prodInp');
             var total = 0;
             products.forEach(function(p, index) {
                 total += p.price * p.quantity;
@@ -127,7 +142,7 @@
 
             prodListElm.append(`
                 <tr>
-                    <td class="text-center" colspan="4"><b>Total</b></td>
+                    <td class="text-center" colspan="4"><b>Tổng cộng</b></td>
                     <td><b>${ total }</b></td>
                 </tr>
             `);
