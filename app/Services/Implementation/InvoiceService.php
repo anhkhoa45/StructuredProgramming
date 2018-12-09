@@ -12,12 +12,12 @@ namespace App\Services\Implementation;
 use App\InvoiceItem;
 use App\Services\InvoiceServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
+use App\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
 use Illuminate\Support\Facades\DB;
-use App\Invoice;
 use App\User;
 
 class InvoiceService implements InvoiceServiceInterface
@@ -53,10 +53,16 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function index(Request $request)
     {
-        $query = Invoice::where('user_id', '>',1);
+//        echo $request->query('daterange');
+//        return $request->query('status');
+        $query = Invoice::where('user_id', '>',-1);
         if($request->has('status') and $request->query('status')!="all"){
             $query = $query->where('status', 'LIKE', '%'.$request->query('status').'%');
         }
+        if($request->has('user_id') and strlen($request->user_id)>0){
+            $query =  $query->where('user_id', '=',$request->user_id);
+        }
+
         if($request->has('daterange')){
             $start_data=date('Y-m-d h:i:s',strtotime(trim(explode("-", $request->query('daterange'))[0])));
             $end_data=date('Y-m-d h:i:s',strtotime(trim(explode("-", $request->query('daterange'))[1]. ' + 23 hours 59 minutes')));
@@ -137,10 +143,10 @@ class InvoiceService implements InvoiceServiceInterface
     {
         $invoice = Invoice::find($id);
         if(!is_null($invoice)){
-            $transactions=$invoice->transactions;
-            foreach($transactions as $transaction)
+            $invoiceItems=$invoice->invoiceItems;
+            foreach($invoiceItems as $invoiceItem)
             {
-                $transaction->delete();
+                $invoiceItem->delete();
             }
             $invoice->delete();
         }
@@ -153,7 +159,7 @@ class InvoiceService implements InvoiceServiceInterface
     function count() {
         return Invoice::count();
     }
-    
+
     /**
      * Count total ordered invoice by month (from Jan -> Dec)
      * @return Invoice

@@ -19,7 +19,9 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins	
        folder instead of downloading all of them to reduce the load. -->	
   <link rel="stylesheet" href="/adminlte/dist/css/skins/_all-skins.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     @show
+
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -58,6 +60,9 @@
                   });
               });
           </script>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
       @show
   </div> <!-- wrapper -->
 </body>

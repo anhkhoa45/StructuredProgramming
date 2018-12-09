@@ -18,7 +18,7 @@ class InvoiceTableSeeder extends Seeder
      */
     public function run()
     {
-        $status_enum =["cancel","finish"," sending","return"];
+        $status_enum =["ordered","delivering"," delivered","canceled"];
         for($i = 0; $i < 180; $i++) {
             $date= now();
             $date->subDays(rand(0,365));
