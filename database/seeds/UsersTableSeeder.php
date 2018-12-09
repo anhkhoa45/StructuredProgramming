@@ -22,16 +22,16 @@ class UsersTableSeeder extends Seeder
             'updated_at' => \Carbon\Carbon::now()
         ]);
 
-        for($i = 0; $i < 100; $i++) {
-            DB::table('users')->insert([
-                'email' => 'test'.$i.'@gmail.com',
-                'password' => Hash::make('secret'),
-                'name' => 'Test'.$i,
-                'role_id' => 2,
-                'avatar' => 'uploads/users/avatars/default.png',
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now()
-            ]);
-        }
+//        for($i = 0; $i < 100; $i++) {
+//            DB::table('users')->insert([
+//                'email' => 'test'.$i.'@gmail.com',
+//                'password' => Hash::make('secret'),
+//                'name' => 'Test'.$i,
+//                'role_id' => 2,
+//                'avatar' => 'uploads/users/avatars/default.png',
+//                'created_at' => \Carbon\Carbon::now(),
+//                'updated_at' => \Carbon\Carbon::now()
+//            ]);
+//        }
     }
 }
