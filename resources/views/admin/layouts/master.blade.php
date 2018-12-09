@@ -21,32 +21,6 @@
   <link rel="stylesheet" href="/adminlte/dist/css/skins/_all-skins.min.css">
     @show
 
-  @section('script')
-<!-- jQuery 3 -->
-<script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="/adminlte/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/adminlte/dist/js/adminlte.min.js"></script>
-<!-- Chart js -->
-<script src="/adminlte/bower_components/chart.js/Chart.js"></script>
-
-<script>
-    $(document).ready(function(){
-        $('a.delete').click(function(){
-            var confirm = window.confirm('Are you sure?');
-            if(confirm)
-                $(this).parent().find('.form-destroy').submit();
-        });
-    });
-</script>
-@show
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
@@ -58,6 +32,33 @@
           @yield('content')   
       </div> <!-- page-content -->
       @include('admin/layouts/__footer')
+
+      @section('script')
+      <!-- jQuery 3 -->
+          <script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+          <!-- jQuery UI 1.11.4 -->
+          <script src="/adminlte/bower_components/jquery-ui/jquery-ui.min.js"></script>
+          <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+          <script>
+              $.widget.bridge('uibutton', $.ui.button);
+          </script>
+          <!-- Bootstrap 3.3.7 -->
+          <script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+          <!-- AdminLTE App -->
+          <script src="/adminlte/dist/js/adminlte.min.js"></script>
+          <!-- Chart js -->
+          <script src="/adminlte/bower_components/chart.js/Chart.js"></script>
+
+          <script>
+              $(document).ready(function(){
+                  $('a.delete').click(function(){
+                      var confirm = window.confirm('Are you sure?');
+                      if(confirm)
+                          $(this).parent().find('.form-destroy').submit();
+                  });
+              });
+          </script>
+      @show
   </div> <!-- wrapper -->
 </body>
 </html>

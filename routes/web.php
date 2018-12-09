@@ -41,6 +41,17 @@ Route::namespace('Customer')->group(function() {
     Route::middleware('auth')->group(function() {
         Route::get('/user/profile', 'UserController@profile')->name('profile');
         Route::post('/user/update', 'UserController@update')->name('profile.update');
+
+        // Payment
+        Route::get('/payment', 'PaymentController@getPayment')->name('payment.get_payment');
+        Route::post('/payment/pay', 'PaymentController@pay')->name('payment.pay');
+
+        //Invoice
+        Route::get('/invoices', 'InvoiceController@index')->name('invoice.index');
+        Route::get('/invoice/{id}', 'InvoiceController@show')->name('invoice.show');
+        Route::get('/invoice/c/{id}', 'InvoiceController@showAndClearCart')->name('invoice.show_n_clear_cart');
+        Route::get('/invoice/cancel/{id}', 'InvoiceController@cancel')->name('invoice.cancel');
+        Route::post('/invoice/update/{id}', 'InvoiceController@update')->name('invoice.edit');
     });
 });
 

@@ -224,10 +224,10 @@
                       <img src="/image/1.png" alt="Product Image">
                     </div>
                     <div class="product-info">
-                      <a href="javascript:void(0)" class="product-title">{{ $item->products[0]->name }}
+                      <a href="javascript:void(0)" class="product-title">{{ $item->product->name }}
                         <span class="label label-warning pull-right">{{ $item->sum }}</span></a>
                         <span class="product-description">
-                          {{ $item->products[0]->description }}
+                          {{ $item->product->description }}
                         </span>
                     </div>
                   </li>
@@ -248,6 +248,10 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
+@endsection
+
+@section('script')
+@parent
 <script type="text/javascript">
 
   // -----------------------
@@ -345,36 +349,36 @@
   var barChart = new Chart(barChartCanvas);
   var barChartData = {
     labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
-		datasets : [
-			{
-				fillColor : "rgba(220,220,220,0.5)",
-				strokeColor : "rgba(220,220,220,0.8)",
-				highlightFill: "rgba(220,220,220,0.75)",
-				highlightStroke: "rgba(220,220,220,1)",
-				data : [
-          <?php
-            echo $monthlyOrderedInvoiceNum[0]->ordered_invoice_num;
-            for ($i=1; $i<12; $i++) {
-              echo "," . $monthlyOrderedInvoiceNum[$i]->ordered_invoice_num;
-            }
-          ?>
-        ]
-			},
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-        data : [
-          <?php
-            echo $monthlyPaidInvoiceNum[0]->paid_invoice_num;
-            for ($i=1; $i<12; $i++) {
-              echo "," . $monthlyPaidInvoiceNum[$i]->paid_invoice_num;
-            }
-          ?>
-        ]
-			}
-		]
+    datasets : [
+        {
+            fillColor : "rgba(220,220,220,0.5)",
+            strokeColor : "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data : [
+              <?php
+                echo $monthlyOrderedInvoiceNum[0]->ordered_invoice_num;
+                for ($i=1; $i<12; $i++) {
+                  echo "," . $monthlyOrderedInvoiceNum[$i]->ordered_invoice_num;
+                }
+              ?>
+            ]
+        },
+        {
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,0.8)",
+            highlightFill : "rgba(151,187,205,0.75)",
+            highlightStroke : "rgba(151,187,205,1)",
+            data : [
+              <?php
+                echo $monthlyPaidInvoiceNum[0]->paid_invoice_num;
+                for ($i=1; $i<12; $i++) {
+                  echo "," . $monthlyPaidInvoiceNum[$i]->paid_invoice_num;
+                }
+              ?>
+            ]
+        }
+    ]
   };
   barChart.Bar(barChartData);
 

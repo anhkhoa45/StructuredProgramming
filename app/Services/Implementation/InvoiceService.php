@@ -9,9 +9,11 @@
 namespace App\Services\Implementation;
 
 
+use App\InvoiceItem;
 use App\Services\InvoiceServiceInterface;
 use App\Storage\LaravelImpl\UserAvatarStorage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\FileExistsException;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +31,10 @@ class InvoiceService implements InvoiceServiceInterface
     public function rulesCreate()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'password' => 'required|confirmed|min:4',
-            'avatar' => 'max:4096|mimes:png,jpg,jpeg,gif'
+            'receiver' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|min:10|max:14',
+            'total' => 'required',
         ];
     }
 
@@ -42,10 +44,7 @@ class InvoiceService implements InvoiceServiceInterface
      */
     public function rulesUpdate($id)
     {
-        $rules = $this->rulesCreate();
-        $rules['password'] = 'nullable|confirmed|min:4';
-        $rules['email'] = "required|email|unique:users,email,$id,id,deleted_at,NULL";
-        return $rules;
+        return $this->rulesCreate();
     }
 
     /**
@@ -88,28 +87,28 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function store(Request $request)
     {
-        $avatar = '';
 
-        if($request->hasFile('avatar')){
-            try{
-                $userAvatarStorage = new UserAvatarStorage();
-                $avatar = $userAvatarStorage->store($request->file('avatar'));
-            } catch (FileExistsException $e) {
-                throw $e;
-            }
-        }
-
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
+        $invoice = Invoice::create([
+            'user_id' => Auth::user()->id,
+            'receiver' => $request->get('receiver'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
+            'total' => $request->get('total'),
+            'paid' => $request->get('method') == 'cash' ? 0 : 1,
+            'payment_method' => $request->get('method'),
+            'status' => 'ordered'
         ]);
 
-        return $user;
+        $products = $request->get('products');
+        foreach ($products as $product) {
+            InvoiceItem::create([
+                'invoice_id' => $invoice->id,
+                'product_id' => $product["id"],
+                'quantity' => $product["quantity"],
+            ]);
+        }
+
+        return $invoice;
     }
 
     /**
@@ -119,25 +118,15 @@ class InvoiceService implements InvoiceServiceInterface
      */
     function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $invoice = Invoice::find($id);
 
-        $avatar = $user->avatar;
-
-        if($request->hasFile('avatar')){
-            $userAvatarStorage = new UserAvatarStorage();
-            $avatar = $userAvatarStorage->replace($user->avatar, $request->file('avatar'));
-        }
-        $active = $request->has('active') ? $request->get('active') : User::INACTIVE;
-        $user->update([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role_id' => $request->get('role_id'),
-            'active' => $active,
-            'avatar' => $avatar
+        $invoice->update([
+            'receiver' => $request->get('receiver'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
         ]);
 
-        return $user;
+        return $invoice;
     }
 
     /**
@@ -206,5 +195,13 @@ class InvoiceService implements InvoiceServiceInterface
             ->whereYear('created_at', '=', 2018)
             ->groupBy('year', 'month')
             ->get();
+    }
+
+    function cancelInvoice($invoice) {
+        if($invoice->canBeCanceled()) {
+            $invoice->update([
+               'status' => 'canceled'
+            ]);
+        }
     }
 }

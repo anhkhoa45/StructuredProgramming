@@ -28,9 +28,11 @@ class InvoiceTableSeeder extends Seeder
                 'user_id' => rand(3, 99),
                 'address' => 'so: '.rand(3, 99).' phuong '.str_random(10).' thanh pho '.str_random(10),
                 'phone' => ''.rand(100,999).'.'.rand(1000,9999).'.'.rand(100,999),
-                'delivered' => rand(0,1) == 1,
+                'status' => 'ordered',
                 'paid' => rand(0,1) == 1,
                 'total' => 0,
+                'payment_method' => 'cash',
+                'receiver' => 'Mr.A',
                 'created_at' => $date
             ]);
         }
