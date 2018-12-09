@@ -11,6 +11,7 @@ return [
     'description' => 'Description',
     'image' => 'Image',
     'price' => 'Price',
+    'gender' => 'Gender',
     'size' => 'Size',
     'quantity' => 'Quantity',
     'created_at' => 'Created at',

@@ -55,6 +55,16 @@
                                     {!! $errors->first('price', '<span class="help-block">:message</span>') !!}
                                 </div>
                             </div>
+                            <div class="form-group {!! $errors->has('gender') ? 'has-error' : '' !!} " >
+                                <label class="col-sm-2 control-label">
+                                    <span class="required">*</span> {!! trans('admin/product.gender') !!}
+                                </label>
+                                <div class="col-sm-9">
+                                    <input autocomplete="off" type="text" class="form-control" name="gender"
+                                           value="{!! old('gender') !!}">
+                                    {!! $errors->first('gender', '<span class="help-block">:message</span>') !!}
+                                </div>
+                            </div>
                             <div class="form-group {!! $errors->has('size') ? 'has-error' : '' !!} " >
                                 <label class="col-sm-2 control-label">
                                     <span class="required">*</span> {!! trans('admin/product.size') !!}
