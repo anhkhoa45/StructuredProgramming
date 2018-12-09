@@ -36,7 +36,6 @@
                                 <th><a data-field="role_id" class="laravel-sort">{!! trans('admin/user.role_id') !!}</a></th>
                                 <th><a data-field="name" class="laravel-sort">{!! trans('admin/user.name') !!}</a></th>
                                 <th><a data-field="email" class="laravel-sort">{!! trans('admin/user.email') !!}</a></th>
-                                <th><a data-field="active" class="laravel-sort">{!! trans('admin/user.status') !!}</th>
                                 <th></th>
                             </tr>
                             @if (sizeof($users) == 0)
@@ -48,7 +47,6 @@
                                 <td><span class="label label-info">{!! $user->roleToString()  !!}</span></td>
                                 <td><div class="break-word max-with-300">{!! $user->name !!}</div></td>
                                 <td>{!! $user->email  !!}</td>
-                                <td><span class="label {!! $user->activeToLbClass() !!}">{!! $user->activeToString() !!}</span></td>
                                 <td class="text-right">
                                     <div class="btn-group-action">				
                                         <div class="btn-group pull-right">
@@ -98,12 +96,4 @@
     <!-- /.row -->
 </section>
 <!-- /.section -->
-@stop
-@section('script')
-@parent 
-<script>
-    $(function () {
-        $('.laravel-sort').laravelSort();
-    });
-</script>
 @stop
