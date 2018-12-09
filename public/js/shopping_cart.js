@@ -82,8 +82,8 @@
                                     </button>
                                 </form>
                             </td>
-                            <td>${products[i].price}$</td>
-                            <td>${products[i].price * products[i].quantity}$</td>
+                            <td>${products[i].price}</td>
+                            <td>${products[i].price * products[i].quantity}</td>
                             <td><span class="oi oi-trash btn btn-trans btn-del"></span></td>
                         </tr>`
                     );
