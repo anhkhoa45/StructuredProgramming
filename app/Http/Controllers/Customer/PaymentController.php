@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Customer;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PayRequest;
 use App\Services\Implementation\CashPaymentService;
 use App\Services\Implementation\StripePaymentService;
 use App\Services\InvoiceServiceInterface;
@@ -26,11 +27,18 @@ class PaymentController extends Controller
         $this->invoiceService = $invoiceService;
     }
 
+    /** Get payment page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     function getPayment() {
         return view('customer.shopping.payment');
     }
 
-    function pay(Request $request) {
+    /** Pay and create invoice
+     * @param PayRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    function pay(PayRequest $request) {
         $method = $request->get('method');
         switch ($method){
             case 'cash':
@@ -41,21 +49,9 @@ class PaymentController extends Controller
                 break;
         }
 
-        $validator = \Validator::make($request->all(), [
-            'receiver' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|min:10|max:14',
-            'total' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
-
         $this->paymentService->pay($request);
         $invoice = $this->invoiceService->store($request);
 
-        // return view invoice;
         return redirect()->route('invoice.show_n_clear_cart', ['id' => $invoice->id]);
     }
 }

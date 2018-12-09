@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
  * Interface ProductServiceInterface
  * @package App\Services\Interfaces
  */
-interface ProductServiceInterface extends ServiceInterface
+interface ProductServiceInterface extends CRUDServiceInterface
 {
     /**
      * Count product

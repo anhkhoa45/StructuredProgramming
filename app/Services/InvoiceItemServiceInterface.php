@@ -16,8 +16,21 @@ use Illuminate\Http\Request;
  * Interface ProductServiceInterface
  * @package App\Services\Interfaces
  */
-interface InvoiceItemServiceInterface extends ServiceInterface
+interface InvoiceItemServiceInterface
 {
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function find($id);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function delete($id);
+
+
     /**
      * Get a number of best seller products
      * @param $num
